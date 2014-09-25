@@ -13,100 +13,63 @@ const
 	fs = require('fs'),
 	windowslib = require('..');
 
-function checkXcode(xcode) {
-	should(xcode).be.an.Object;
-	should(xcode).have.keys('xcodeapp', 'path', 'selected', 'version', 'build', 'supported', 'sdks', 'sims', 'executables');
+function checkVisualStudio(visualstudio) {
+	should(visualstudio).be.an.Object;
+	should(visualstudio).have.keys('version', 'registryKey', 'supported', 'wpsdk', 'path', 'selected');
 
-	should(xcode.xcodeapp).be.a.String;
-	should(xcode.xcodeapp).not.equal('');
-	should(fs.existsSync(xcode.xcodeapp)).be.true;
-	should(fs.statSync(xcode.xcodeapp).isDirectory()).be.true;
+//	should(visualstudio.visualstudioapp).be.a.String;
+//	should(visualstudio.visualstudioapp).not.equal('');
+//	should(fs.existsSync(visualstudio.visualstudioapp)).be.true;
+//	should(fs.statSync(visualstudio.visualstudioapp).isDirectory()).be.true;
 
-	should(xcode.path).be.a.String;
-	should(xcode.path).not.equal('');
-	should(fs.existsSync(xcode.path)).be.true;
-	should(fs.statSync(xcode.path).isDirectory()).be.true;
+	should(visualstudio.path).be.a.String;
+	should(visualstudio.path).not.equal('');
+	should(fs.existsSync(visualstudio.path)).be.true;
+	should(fs.statSync(visualstudio.path).isDirectory()).be.true;
 
-	should(xcode.selected).be.a.Boolean;
+	should(visualstudio.selected).be.a.Boolean;
 
-	should(xcode.version).be.a.String;
-	should(xcode.version).not.equal('');
+	should(visualstudio.version).be.a.String;
+	should(visualstudio.version).not.equal('');
 
-	should(xcode.build).be.a.String;
-	should(xcode.build).not.equal('');
+//	should(visualstudio.build).be.a.String;
+//	should(visualstudio.build).not.equal('');
 
-	should([null, true, false, 'maybe']).containEql(xcode.supported);
+	should([null, true, false, 'maybe']).containEql(visualstudio.supported);
 
-	should(xcode.sdks).be.an.Array;
-	xcode.sdks.forEach(function (s) {
-		should(s).be.a.String;
-		should(s).not.equal('');
-	});
+//	should(visualstudio.sdks).be.an.Array;
+//	visualstudio.sdks.forEach(function (s) {
+//		should(s).be.a.String;
+//		should(s).not.equal('');
+//	});
 
-	should(xcode.sims).be.an.Array;
-	xcode.sims.forEach(function (s) {
-		should(s).be.a.String;
-		should(s).not.equal('');
-	});
-
-	should(xcode.executables).be.an.Object;
-	should(xcode.executables).have.keys('xcodebuild', 'clang', 'clang_xx', 'libtool', 'lipo', 'otool');
-
-	should(xcode.executables.xcodebuild).be.a.String;
-	should(xcode.executables.xcodebuild).not.equal('');
-	should(fs.existsSync(xcode.executables.xcodebuild)).be.true;
-	should(fs.statSync(xcode.executables.xcodebuild).isDirectory()).be.false;
-
-	should(xcode.executables.clang).be.a.String;
-	should(xcode.executables.clang).not.equal('');
-	should(fs.existsSync(xcode.executables.clang)).be.true;
-	should(fs.statSync(xcode.executables.clang).isDirectory()).be.false;
-
-	should(xcode.executables.clang_xx).be.a.String;
-	should(xcode.executables.clang_xx).not.equal('');
-	should(fs.existsSync(xcode.executables.clang_xx)).be.true;
-	should(fs.statSync(xcode.executables.clang_xx).isDirectory()).be.false;
-
-	should(xcode.executables.libtool).be.a.String;
-	should(xcode.executables.libtool).not.equal('');
-	should(fs.existsSync(xcode.executables.libtool)).be.true;
-	should(fs.statSync(xcode.executables.libtool).isDirectory()).be.false;
-
-	should(xcode.executables.lipo).be.a.String;
-	should(xcode.executables.lipo).not.equal('');
-	should(fs.existsSync(xcode.executables.lipo)).be.true;
-	should(fs.statSync(xcode.executables.lipo).isDirectory()).be.false;
-
-	should(xcode.executables.otool).be.a.String;
-	should(xcode.executables.otool).not.equal('');
-	should(fs.existsSync(xcode.executables.otool)).be.true;
-	should(fs.statSync(xcode.executables.otool).isDirectory()).be.false;
+	should(visualstudio.wpsdk).be.an.Object;
 }
 
-describe('xcode', function () {
+describe('visualstudio', function () {
 	it('namespace should be an object', function () {
-		should(ioslib.xcode).be.an.Object;
+		should(windowslib.visualstudio).be.an.Object;
 	});
 
-	it('detect should find Xcode installations', function (done) {
+	it('detect should find Visual Studio installations', function (done) {
 		this.timeout(5000);
 		this.slow(2000);
 
-		ioslib.xcode.detect(function (err, results) {
+		windowslib.visualstudio.detect(function (err, results) {
 			if (err) {
 				return done(err);
 			}
 
 			should(results).be.an.Object;
-			should(results).have.keys('selectedXcode', 'xcode', 'issues');
-			should(results.selectedXcode).be.an.Object;
-			should(results.xcode).be.an.Object;
+			should(results).have.keys('selectedVisualstudio', 'visualstudio', 'issues');
+			should(results.selectedVisualstudio).be.an.Object;
+			should(results.visualstudio).be.an.Object;
 			should(results.issues).be.an.Array;
 
-			checkXcode(results.selectedXcode);
+			checkVisualStudio(results.selectedVisualstudio);
 
-			Object.keys(results.xcode).forEach(function (ver) {
-				checkXcode(results.xcode[ver]);
+			Object.keys(results.visualstudio).forEach(function (ver) {
+				checkVisualStudio(results.visualstudio[ver]);
 			});
 
 			results.issues.forEach(function (issue) {
