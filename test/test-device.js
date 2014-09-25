@@ -16,46 +16,6 @@ const
 	windowslib = require('..'),
 	path = require('path');
 
-function build(provisioningProfileUUID, certName, defs, done){
-	if (typeof defs === 'function') {
-		done = defs;
-		defs = [];
-	}
-
-	windowslib.visualstudio.detect(function (err, env) {
-		if (err) {
-			return done(err);
-		}
-
-		if (env.selectedVisualstudio === null) {
-			return done(new Error(__('No selected Visual Studio')));
-		}
-
-		var cmd = [
-			env.selectedVisualstudio.executables.msbuild,
-			'clean', 'build',
-			'-configuration', 'Debug',
-			'-sdk', 'iphoneos' + appc.version.format(env.selectedVisualstudio.sdks[0], 2, 2),
-			'VALID_ARCHS="armv7 armv7s"',
-			'ARCHS="armv7 armv7s"',
-			'IPHONEOS_DEPLOYMENT_TARGET=6.0',
-			'PROVISIONING_PROFILE=' + provisioningProfileUUID,
-			'DEPLOYMENT_POSTPROCESSING=YES',
-			'CODE_SIGN_IDENTITY="' + certName + '"',
-			'GCC_PREPROCESSOR_DEFINITIONS="' + defs.join(' ') + '"'
-		].join(' ');
-
-		exec(cmd, {
-			cwd: path.join(__dirname, 'TestApp')
-		}, function (code, out, err) {
-			should(out).match(/BUILD SUCCEEDED/);
-			var appPath = path.join(__dirname, 'TestApp', 'build', 'Debug-iphoneos', 'TestApp.app');
-			should(fs.existsSync(appPath)).be.true;
-			done(null, appPath);
-		});
-	});
-}
-
 describe('device', function () {
 	it('namespace should be an object', function () {
 		should(windowslib.device).be.an.Object;
@@ -124,69 +84,6 @@ describe('device', function () {
 			});
 
 			done();
-		});
-	});
-
-	(process.env.TRAVIS ? it.skip : it)('should fail to install app bad app path', function (done) {
-		this.timeout(30000);
-		this.slow(30000);
-
-		windowslib.device.install(null, '/path/to/something/that/does/not/exist', 'foo', function (err) {
-			should(err).be.an.instanceOf(Error);
-			done();
-		}).on('error', function (err) {
-			should(err).be.an.instanceOf(Error);
-		});
-	});
-
-	(process.env.TRAVIS ? it.skip : it)('should be able to install app to device', function (done) {
-		this.timeout(60000);
-		this.slow(60000);
-
-		var appId = 'com.appcelerator.TestApp';
-
-		// find us a device
-		windowslib.findValidDeviceCertProfileCombos({
-			appId: appId
-		}, function (err, results) {
-			function noop() {}
-
-			if (err) {
-				return done(err);
-			}
-
-			if (!results.length) {
-				return done(new Error('No valid device/cert/provisioning profile combos found'));
-			}
-
-			build(results[0].ppUUID, results[0].certName, ['TEST_BASIC_LOGGING'], function (err, appPath) {
-				should(err).not.be.ok;
-				should(appPath).be.a.String;
-				should(fs.existsSync(appPath)).be.ok;
-
-				var started = false,
-					timer = null;
-
-				windowslib.device.install(results[0].deviceUDID, appPath, appId, function (err) {
-					should(err).not.be.ok;
-
-					console.log('Please launch app. You have 10 seconds.');
-
-					timer = setTimeout(function () {
-						done(new Error(started ? "App started, but didn't produce any log output" : 'App was not started'));
-						done = noop;
-					}, 10000);
-				}).on('app-started', function () {
-					started = true;
-				}).on('log', function (msg) {
-					clearTimeout(timer);
-					done();
-					done = noop;
-				}).on('error', function (err) {
-					done(err);
-					done = noop;
-				});
-			});
 		});
 	});
 });
