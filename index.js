@@ -15,7 +15,7 @@ const
 
 	//certs        = exports.certs        = require('./lib/certs'),
 	device       = exports.device       = require('./lib/device'),
-	env          = exports.env          = require('./lib/env'),
+	//env          = exports.env          = require('./lib/env'),
 	//provisioning = exports.provisioning = require('./lib/provisioning'),
 	//simulator    = exports.simulator    = require('./lib/simulator'),
 	visualstudio = exports.visualstudio = require('./lib/visualstudio'),
@@ -24,7 +24,6 @@ const
 	cache;
 
 exports.detect = detect;
-exports.findValidDeviceCertProfileCombos = findValidDeviceCertProfileCombos;
 
 /**
  * Detects the entire Windows phone environment information.
@@ -86,30 +85,12 @@ function detect(options, callback) {
 	}
 
 	async.parallel([
-//		function certificates(done) {
-//			certs.detect(options, function (err, result) {
-//				err || mix(result, results);
-//				done(err);
-//			});
-//		},
 		function devices(done) {
 			device.detect(options, function (err, result) {
 				err || mix(result, results);
 				done(err);
 			});
 		},
-		function environment(done) {
-			env.detect(options, function (err, result) {
-				err || mix(result, results);
-				done(err);
-			});
-		},
-//		function provisioningProfiles(done) {
-//			provisioning.detect(options, function (err, result) {
-//				err || mix(result, results);
-//				done(err);
-//			});
-//		},
 //		function simulators(done) {
 //			simulator.detect(options, function (err, result) {
 //				err || mix(result, results);
