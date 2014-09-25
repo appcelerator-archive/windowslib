@@ -1,0 +1,55 @@
+{
+	"name": "windowslib",
+	"version": "0.0.1",
+	"description": "Windows Phone Utility Library",
+	"keywords": [
+		"appcelerator",
+		"windows",
+		"visualstudio",
+		"microsoft"
+	],
+	"author": {
+		"name": "Appcelerator, Inc.",
+		"email": "npmjs@appcelerator.com"
+	},
+	"maintainers": [
+		{"name": "Jeff Haynie", "email": "jhaynie@appcelerator.com"},
+		{"name": "Chris Barber", "email": "cbarber@appcelerator.com"},
+		{"name": "Chris Williams", "email": "cwilliams@appcelerator.com"},
+	],
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/appcelerator/windowslib.git"
+	},
+	"license": "Apache Public License v2",
+	"main": "./index",
+	"bugs": {
+		"url": "https://github.com/appcelerator/windowslib/issues"
+	},
+	"directories": {
+		"lib": "./lib"
+	},
+	"dependencies": {
+		"always-tail": "~0.1.1",
+		"async": "~0.9.0",
+		"node-appc": "0.2.16",
+		"simple-plist": "~0.0.2"
+	},
+	"devDependencies": {
+		"mocha": "~1.21.4",
+		"should": "~4.0.4"
+	},
+	"scripts": {
+		"test": "mocha --require test/init --reporter spec --check-leaks test/",
+		"test-certs": "mocha --require test/init --reporter spec --check-leaks test/test-certs",
+		"test-device": "mocha --require test/init --reporter spec --check-leaks test/test-device",
+		"test-env": "mocha --require test/init --reporter spec --check-leaks test/test-env",
+		"test-windowslib": "mocha --require test/init --reporter spec --check-leaks test/test-windowslib",
+		"test-provisioning": "mocha --require test/init --reporter spec --check-leaks test/test-provisioning",
+		"test-simulator": "mocha --require test/init --reporter spec --check-leaks test/test-simulator",
+		"test-visualstudio": "mocha --require test/init --reporter spec --check-leaks test/test-visualstudio"
+	},
+	"engines": {
+		"node": ">=0.8"
+	}
+}
