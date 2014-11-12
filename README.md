@@ -19,6 +19,13 @@ From GitHub:
 
 	npm install git://github.com/appcelerator/windowslib.git
 
+## Caveats
+- Some of the emulator detection functionality requires the use of Powershell scripts. for the library to be able to execute these scripts, the user must change their ExecutionPolicy first by doing:
+```
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+```
+- If attempting to connect to a device, you need to ensure the connected device is not asleep/locked or connecting will fail.
+
 ## Examples
 
 ### Detect all the connected Windows Phone devices:
