@@ -1,10 +1,9 @@
 # Windows Phone Utility Library
 
 This is a library of utilities for dealing programmatically with Windows Phone applications,
-used namely for tools like [Hyperloop](https://github.com/appcelerator/hyperloop)
-and [Titanium](https://github.com/appcelerator/titanium).
+used namely for tools like [Titanium](https://github.com/appcelerator/titanium).
 
-windowslib supports Visual Studio XXX.
+windowslib supports Visual Studio 2012 and 2013.
 
 [![Build Status](https://travis-ci.org/appcelerator/windowslib.svg?branch=master)](https://travis-ci.org/appcelerator/windowslib) [![NPM version](https://badge.fury.io/js/windowslib.svg)](http://badge.fury.io/js/windowslib)
 
@@ -24,6 +23,13 @@ From GitHub:
 
 ### Detect all the connected Windows Phone devices:
 
+Note: Microsoft's tooling always reports a single device present regardless if
+there are no devices connected or several. The device will have an ID of `0`
+(zero).
+
+In the event Microsoft's next mobile platform has improved tooling that supports
+multiple devices, this detection code should be good to go.
+
 ```javascript
 var windowslib = require('windowslib');
 
@@ -36,50 +42,41 @@ windowslib.device.detect(function (err, devices) {
 });
 ```
 
-### Install an application on device
+### Install an Application on Device
 
 ```javascript
 var deviceUDID = null; // string or null to pick first device
 
-windowslib.device.install(deviceUDID, '/path/to/name.app', 'com.company.appname')
+windowslib.device.install(deviceUDID, 'C:\\path\\to\\zapfile.zap')
 	.on('installed', function () {
 		console.log('App successfully installed on device');
-	})
-	.on('appStarted', function () {
-		console.log('App has started');
-	})
-	.on('log', function (msg) {
-		console.log('[LOG] ' + msg);
-	})
-	.on('appQuit', function () {
-		console.log('App has quit');
 	})
 	.on('error', function (err) {
 		console.error(err);
 	});
 ```
 
-### Launch the Windows Phone Simulator
+### Launch the Windows Phone Emulator
+
+Passing in null for the `udid` will auto-select a emulator and launch it.
 
 ```javascript
-windowslib.simulator.launch(null, function (err, simHandle) {
-	console.log('Simulator launched');
-	windowslib.simulator.stop(simHandle, function () {
-		console.log('Simulator stopped');
+windowslib.emulator.launch(null, function (err, handle) {
+	console.log('Emulator launched');
+	windowslib.emulator.stop(handle, function () {
+		console.log('Emulator stopped');
 	});
 });
 ```
 
-### Launch, install, and run an application on simulator
+### Launch, install, and Run an Application on the Emulator
 
 ```javascript
-var simUDID = null; // string or null to pick a simulator
+var udid = null; // string or null to pick an emulator
 
-windowslib.simulator.launch(simUDID, {
-		appPath: '/path/to/name.app'
-	})
+windowslib.emulator.install(udid, 'C:\\path\\to\\zapfile.zap')
 	.on('launched', function (msg) {
-		console.log('Simulator has launched');
+		console.log('Emulator has launched');
 	})
 	.on('appStarted', function (msg) {
 		console.log('App has started');
@@ -92,35 +89,19 @@ windowslib.simulator.launch(simUDID, {
 	});
 ```
 
-### Force stop an application running on simulator
+### Force Stop an Application Running on the Emulator
 
 ```javascript
-windowslib.simulator.launch(simUDID, {
-		appPath: '/path/to/name.app'
-	})
-	.on('launched', function (simHandle) {
-		console.log('Simulator launched');
-		windowslib.simulator.stop(simHandle).on('stopped', function () {
-			console.log('Simulator stopped');
+windowslib.emulator.launch(udid)
+	.on('launched', function (handle) {
+		console.log('Emulator launched');
+		windowslib.emulator.stop(handle).on('stopped', function () {
+			console.log('Emulator stopped');
 		});
 	});
 ```
 
-### Find a valid device/cert/provisioning profile combination
-
-```javascript
-windowslib.findValidDeviceCertProfileCombos({
-	appId: 'com.company.appname'
-}, function (err, results) {
-	if (err) {
-		console.error(err);
-	} else {
-		console.log(results);
-	}
-});
-```
-
-### Detect everything
+### Detect Everything
 
 ```javascript
 windowslib.detect(function (err, info) {
@@ -128,42 +109,6 @@ windowslib.detect(function (err, info) {
 		console.error(err);
 	} else {
 		console.log(info);
-	}
-});
-```
-
-### Detect Windows Phone certificates
-
-```javascript
-windowslib.certs.detect(function (err, certs) {
-	if (err) {
-		console.error(err);
-	} else {
-		console.log(certs);
-	}
-});
-```
-
-### Detect provisioning profiles
-
-```javascript
-windowslib.provisioning.detect(function (err, profiles) {
-	if (err) {
-		console.error(err);
-	} else {
-		console.log(profiles);
-	}
-});
-```
-
-### Detect Visual Studio installations
-
-```javascript
-windowslib.xcode.detect(function (err, xcodeInfo) {
-	if (err) {
-		console.error(err);
-	} else {
-		console.log(xcodeInfo);
 	}
 });
 ```
@@ -181,25 +126,24 @@ npm test
 To run a specific test suite:
 
 ```
-npm run-script test-certs
+npm run-script test-assemblies
 
 npm run-script test-device
 
+npm run-script test-emulator
+
 npm run-script test-env
 
-npm run-script test-windowslib
+npm run-script test-logrelay
 
-npm run-script test-provisioning
-
-npm run-script test-simulator
+npm run-script test-process
 
 npm run-script test-visualstudio
+
+npm run-script test-windowsphone
+
+npm run-script test-wptool
 ```
-
-## Known Issues
-
-Simulator tests fail due to issue with NSLog() calls not properly being logged
-and thus we don't know when tests are done. The result is the tests timeout.
 
 ## Reporting Bugs or Submitting Fixes
 
@@ -228,12 +172,8 @@ your email address in your first pull request so that we can make sure that will
 locate your CLA.  Once you've submitted it, you no longer need to send one for
 subsequent submissions.
 
-## Contributors
-
-The original source and design for this project was developed by
-[Jeff Haynie](http://github.com/jhaynie) ([@jhaynie](http://twitter.com/jhaynie)).
-
 ## Legal
 
-Copyright (c) 2014 by [Appcelerator, Inc](http://www.appcelerator.com). All Rights Reserved.
-This project is licensed under the Apache Public License, version 2.  Please see details in the LICENSE file.
+Copyright (c) 2014 by [Appcelerator, Inc](http://www.appcelerator.com). All
+Rights Reserved. This project is licensed under the Apache Public License,
+version 2. Please see details in the LICENSE file.

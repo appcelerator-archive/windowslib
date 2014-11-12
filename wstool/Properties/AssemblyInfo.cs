@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("AppLauncher")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("wstool")]
+[assembly: AssemblyDescription("Windows Store App utility")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("AppLauncher")]
-[assembly: AssemblyCopyright("Copyright ©  2013")]
+[assembly: AssemblyCompany("Appcelerator")]
+[assembly: AssemblyProduct("wstool")]
+[assembly: AssemblyCopyright("Copyright © 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("6b3b0ff1-d961-45dc-b7a9-56e4eea2c74e")]
+[assembly: Guid("b2b43b55-0640-4519-98a4-d9820da30cfc")]
 
 // Version information for an assembly consists of the following four values:
 //

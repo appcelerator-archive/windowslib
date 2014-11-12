@@ -10,115 +10,151 @@
  */
 
 const
-	async = require('async'),
+	async        = require('async'),
 	EventEmitter = require('events').EventEmitter,
+	magik        = require('./lib/utilities').magik,
 
-	//certs        = exports.certs        = require('./lib/certs'),
+	packageJson  = require('./package.json'),
+
+	assemblies   = exports.assemblies   = require('./lib/assemblies'),
 	device       = exports.device       = require('./lib/device'),
-	//env          = exports.env          = require('./lib/env'),
-	//provisioning = exports.provisioning = require('./lib/provisioning'),
-	//simulator    = exports.simulator    = require('./lib/simulator'),
-	visualstudio = exports.visualstudio = require('./lib/visualstudio'),
-	windowsphone = exports.visualstudio = require('./lib/windowsphone'),
+	emulator     = exports.emulator     = require('./lib/emulator'),
+	env          = exports.env          = require('./lib/env'),
+	windowsphone = exports.windowsphone = require('./lib/windowsphone'),
+	wptool       = exports.wptool       = require('./lib/wptool'),
+	visualstudio = exports.visualstudio = require('./lib/visualstudio');
 
-	cache;
+var cache;
 
-exports.detect = detect;
+exports.certs    = require('./lib/certs');
+exports.detect   = detect;
+exports.install  = install;
+exports.LogRelay = require('./lib/logrelay');
+exports.process  = require('./lib/process');
+exports.version  = packageJson.version;
+exports.winstore = require('./lib/winstore');
 
 /**
  * Detects the entire Windows phone environment information.
  *
  * @param {Object} [options] - An object containing various settings.
  * @param {Boolean} [options.bypassCache=false] - When true, re-detects the all Windows phone information.
- * @param {Function} [callback(err, simHandle)] - A function to call when the simulator has launched.
+ * @param {String} [options.assemblyPath=%WINDIR%\Microsoft.NET\assembly\GAC_MSIL] - Path to .NET global assembly cache.
+ * @param {String} [options.powershell] - Path to the <code>powershell</code> executable.
+ * @param {String} [options.preferredWindowsPhoneSDK] - The preferred version of the Windows Phone SDK to use by default. Example "8.0".
+ * @param {String} [options.preferredVisualStudio] - The preferred version of Visual Studio to use by default. Example: "13".
+ * @param {Object} [options.requiredAssemblies] - An object containing assemblies to check for in addition to the required windowslib dependencies.
+ * @param {String} [options.supportedMSBuildVersions] - A string with a version number or range to check if a MSBuild version is supported.
+ * @param {String} [options.supportedVisualStudioVersions] - A string with a version number or range to check if a Visual Studio install is supported.
+ * @param {Function} [callback(err, info)] - A function to call when all detection tasks have completed.
+ *
+ * @returns {EventEmitter}
  */
 function detect(options, callback) {
-	if (typeof options === 'function') {
-		callback = options;
-		options = {};
-	} else if (!options) {
-		options = {};
-	}
-	typeof callback === 'function' || (callback = function () {});
-
-	var emitter = new EventEmitter;
-
-	if (process.platform !== 'win32') {
-		process.nextTick(function () {
-			var err = new Error(__('Unsupported platform "%s"', process.platform));
-			emitter.emit('error', err);
-			callback(err);
-		});
-		return emitter;
-	}
-
-	if (cache && !options.bypassCache) {
-		process.nextTick(function () {
+	return magik(options, callback, function (emitter, options, callback) {
+		if (cache && !options.bypassCache) {
 			emitter.emit('detected', cache);
-			callback(null, cache);
-		});
-		return emitter;
-	}
+			return callback(null, cache);
+		}
 
-	var results = {
-		detectVersion: '3.0',
-		issues: []
-	};
+		var results = {
+			detectVersion: '3.0',
+			issues: []
+		};
 
-	function mix(src, dest) {
-		Object.keys(src).forEach(function (name) {
-			if (Array.isArray(src[name])) {
-				if (Array.isArray(dest[name])) {
-					dest[name] = dest[name].concat(src[name]);
+		function mix(src, dest) {
+			Object.keys(src).forEach(function (name) {
+				if (Array.isArray(src[name])) {
+					if (Array.isArray(dest[name])) {
+						dest[name] = dest[name].concat(src[name]);
+					} else {
+						dest[name] = src[name];
+					}
+				} else if (src[name] !== null && typeof src[name] === 'object') {
+					dest[name] || (dest[name] = {});
+					Object.keys(src[name]).forEach(function (key) {
+						dest[name][key] = src[name][key];
+					});
 				} else {
 					dest[name] = src[name];
 				}
-			} else if (src[name] !== null && typeof src[name] === 'object') {
-				dest[name] || (dest[name] = {});
-				Object.keys(src[name]).forEach(function (key) {
-					dest[name][key] = src[name][key];
-				});
+			});
+		}
+
+		async.each([env, visualstudio, windowsphone, assemblies, device, emulator], function (lib, next) {
+			lib.detect(options, function (err, result) {
+				err || mix(result, results);
+				next(err);
+			});
+		}, function (err) {
+			if (err) {
+				emitter.emit('error', err);
+				callback(err);
 			} else {
-				dest[name] = src[name];
+				cache = results;
+				emitter.emit('detected', results);
+				callback(null, results);
 			}
 		});
-	}
-
-	async.parallel([
-		function devices(done) {
-			device.detect(options, function (err, result) {
-				err || mix(result, results);
-				done(err);
-			});
-		},
-//		function simulators(done) {
-//			simulator.detect(options, function (err, result) {
-//				err || mix(result, results);
-//				done(err);
-//			});
-//		},
-		function visualstudios(done) {
-			visualstudio.detect(options, function (err, result) {
-				err || mix(result, results);
-				done(err);
-			});
-		},
-		function windowsphones(done) {
-			windowsphone.detect(options, function (err, result) {
-				err || mix(result, results);
-				done(err);
-			});
-		}
-	], function (err) {
-		if (err) {
-			emitter.emit('error', err);
-			callback(err);
-		} else {
-			cache = results;
-			emitter.emit('detected', results);
-			callback(null, results);
-		}
 	});
-
-	return emitter;
 };
+
+/**
+ * Installs the specified app to an Windows Phone emulator. If the emulator is not running, it will launch it.
+ *
+ * @param {String} udid - The UDID of the emulator to install the app to or null if you want windowslib to pick one.
+ * @param {String} appPath - The path to the Windows Phone app to install.
+ * @param {Object} [options] - An object containing various settings.
+ * @param {Boolean} [options.bypassCache=false] - When true, re-detects the environment configuration.
+ * @param {Number} [options.timeout] - Number of milliseconds to wait before timing out.
+ * @param {Function} [callback(err)] - A function to call when the simulator has launched.
+ *
+ * ?????????????????????????????????????????????????????????????????? @emits module:windowslib#app-quit
+ * ?????????????????????????????????????????????????????????????????? @emits module:windowslib#app-started
+ * @emits module:windowslib#error
+ * @emits module:windowslib#installed
+ * ?????????????????????????????????????????????????????????????????? @emits module:windowslib#log
+ *
+ * @returns {EventEmitter}
+ */
+function install(udid, appPath, options, callback) {
+	return magik(options, callback, function (emitter, options, callback) {
+		detect(options, function (err, results) {
+			if (err) {
+				emitter.emit('error', err);
+				return callback(err);
+			}
+			var type;
+
+			// determine if this is a device or emulator udid
+			if (results.devices.some(function (d) { return d.udid === udid; })) {
+				// it's a device!
+				type = device;
+			} else {
+				Object.keys(results.emulators).some(function (wpsdk) {
+					return results.emulators[wpsdk].some(function (e) {
+						if (e.udid === udid) {
+							type = emulator;
+							return true;
+						}
+					});
+				});
+			}
+
+			if (!type) {
+				// oh no
+				var ex = new Error(__('Invalid device id: %s', udid));
+				emitter.emit('error', ex);
+				return callback(ex);
+			}
+
+			var installEmitter = type.install(udid, appPath, options, callback),
+				originalEmitter = installEmitter.emit;
+
+			installEmitter.emit = function () {
+				originalEmitter.apply(installEmitter, arguments);
+				emitter.emit.apply(emitter, arguments);
+			};
+		});
+	});
+}
