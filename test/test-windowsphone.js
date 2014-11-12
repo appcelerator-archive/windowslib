@@ -13,35 +13,6 @@ const
 	fs = require('fs'),
 	windowslib = require('..');
 
-function checkSDK(sdk) {
-	should(sdk).be.an.Object;
-	should(sdk).have.keys('registryKey', 'path', 'selected', 'version', 'deployCmd', 'supported');//, 'devices');
-
-	should(sdk.registryKey).be.a.String;
-	should(sdk.registryKey).not.equal('');
-
-	should(sdk.path).be.a.String;
-	should(sdk.path).not.equal('');
-	should(fs.existsSync(sdk.path)).be.true;
-	should(fs.statSync(sdk.path).isDirectory()).be.true;
-
-	should(sdk.selected).be.a.Boolean;
-
-	should(sdk.version).be.a.String;
-	should(sdk.version).not.equal('');
-
-	should(sdk.deployCmd).be.a.String;
-	should(sdk.deployCmd).not.equal('');
-
-	should([null, true, false, 'maybe']).containEql(sdk.supported);
-
-//	should(sdk.devices).be.an.Array;
-//	sdk.devices.forEach(function (s) {
-//		should(s).be.a.String;
-//		should(s).not.equal('');
-//	});
-}
-
 describe('windowsphone', function () {
 	it('namespace should be an object', function () {
 		should(windowslib.windowsphone).be.an.Object;
@@ -57,14 +28,34 @@ describe('windowsphone', function () {
 			}
 
 			should(results).be.an.Object;
-			should(results).have.keys('sdks', 'issues');
-			should(results.sdks).be.an.Object;
+			should(results).have.keys('windowsphone', 'issues');
+
+			if (results.windowsphone !== null) {
+				should(results.windowsphone).be.an.Object;
+				Object.keys(results.windowsphone).forEach(function (ver) {
+					should(results.windowsphone[ver]).be.an.Object;
+					should(results.windowsphone[ver]).have.keys('version', 'registryKey', 'supported', 'path', 'deployCmd', 'selected');
+
+					should(results.windowsphone[ver].version).be.a.String;
+					should(results.windowsphone[ver].version).not.equal('');
+
+					should(results.windowsphone[ver].registryKey).be.a.String;
+					should(results.windowsphone[ver].registryKey).not.equal('');
+
+					should(results.windowsphone[ver].supported).be.a.Boolean;
+
+					should(results.windowsphone[ver].path).be.a.String;
+					should(results.windowsphone[ver].path).not.equal('');
+					should(fs.existsSync(results.windowsphone[ver].path)).be.ok;
+
+					should(results.windowsphone[ver].deployCmd).be.a.String;
+					should(results.windowsphone[ver].deployCmd).not.equal('');
+
+					should(results.windowsphone[ver].selected).be.a.Boolean;
+				});
+			}
+
 			should(results.issues).be.an.Array;
-
-			Object.keys(results.sdks).forEach(function (ver) {
-				checkSDK(results.sdks[ver]);
-			});
-
 			results.issues.forEach(function (issue) {
 				should(issue).be.an.Object;
 				should(issue).have.keys('id', 'type', 'message');

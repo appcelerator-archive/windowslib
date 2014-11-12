@@ -10,11 +10,9 @@
  */
 
 const
-	appc = require('node-appc'),
-	exec = require('child_process').exec,
 	fs = require('fs'),
-	windowslib = require('..'),
-	path = require('path');
+	path = require('path'),
+	windowslib = require('..');
 
 describe('device', function () {
 	it('namespace should be an object', function () {
@@ -23,7 +21,7 @@ describe('device', function () {
 
 	it('detect Windows Phone devices', function (done) {
 		this.timeout(5000);
-		this.slow(2000);
+		this.slow(4000);
 
 		windowslib.device.detect(function (err, results) {
 			if (err) {
@@ -36,41 +34,16 @@ describe('device', function () {
 			should(results.devices).be.an.Array;
 			results.devices.forEach(function (dev) {
 				should(dev).be.an.Object;
-				should(dev).have.keys('udid', 'name', 'buildVersion', 'cpuArchitecture', 'deviceClass', 'deviceColor',
-					'hardwareModel', 'modelNumber', 'productType', 'productVersion', 'serialNumber');
-
-				should(dev.udid).be.a.String;
-				should(dev.udid).not.equal('');
+				should(dev).have.keys('name', 'udid', 'index', 'wpsdk');
 
 				should(dev.name).be.a.String;
 				should(dev.name).not.equal('');
 
-				should(dev.buildVersion).be.a.String;
-				should(dev.buildVersion).not.equal('');
+				should(dev.udid).be.a.Number;
 
-				should(dev.cpuArchitecture).be.a.String;
-				should(dev.cpuArchitecture).not.equal('');
+				should(dev.index).be.a.Number;
 
-				should(dev.deviceClass).be.a.String;
-				should(dev.deviceClass).not.equal('');
-
-				should(dev.deviceColor).be.a.String;
-				should(dev.deviceColor).not.equal('');
-
-				should(dev.hardwareModel).be.a.String;
-				should(dev.hardwareModel).not.equal('');
-
-				should(dev.modelNumber).be.a.String;
-				should(dev.modelNumber).not.equal('');
-
-				should(dev.productType).be.a.String;
-				should(dev.productType).not.equal('');
-
-				should(dev.productVersion).be.a.String;
-				should(dev.productVersion).not.equal('');
-
-				should(dev.serialNumber).be.a.String;
-				should(dev.serialNumber).not.equal('');
+				should(dev.wpsdk).not.be.ok;
 			});
 
 			should(results.issues).be.an.Array;
@@ -84,6 +57,34 @@ describe('device', function () {
 			});
 
 			done();
+		});
+	});
+
+	it('connect to a device', function (done) {
+		this.timeout(120000);
+		this.slow(110000);
+
+		windowslib.device.connect(0, done);
+	});
+
+	it('install app on a device', function (done) {
+		this.timeout(120000);
+		this.slow(110000);
+
+		windowslib.visualstudio.build({
+			buildConfiguration: 'Debug',
+			project: path.join(__dirname, 'TestApp', 'TestApp.csproj')
+		}, function (err, result) {
+			if (err) {
+				return done(err);
+			}
+
+			var xapFile = path.join(__dirname, 'TestApp', 'Bin', 'Debug', 'TestApp_Debug_AnyCPU.xap');
+			should(fs.existsSync(xapFile)).be.ok;
+
+			windowslib.device.install(0, xapFile, function (err) {
+				done(err);
+			});
 		});
 	});
 });

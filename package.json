@@ -1,11 +1,15 @@
 {
 	"name": "windowslib",
-	"version": "0.0.1",
+	"version": "0.1.0",
 	"description": "Windows Phone Utility Library",
 	"keywords": [
 		"appcelerator",
 		"windows",
+		"windows phone",
+		"winstore",
+		"windows store",
 		"visualstudio",
+		"visual studio",
 		"microsoft"
 	],
 	"author": {
@@ -13,9 +17,8 @@
 		"email": "npmjs@appcelerator.com"
 	},
 	"maintainers": [
-		{"name": "Jeff Haynie", "email": "jhaynie@appcelerator.com"},
 		{"name": "Chris Barber", "email": "cbarber@appcelerator.com"},
-		{"name": "Chris Williams", "email": "cwilliams@appcelerator.com"},
+		{"name": "Chris Williams", "email": "cwilliams@appcelerator.com"}
 	],
 	"repository": {
 		"type": "git",
@@ -30,21 +33,28 @@
 		"lib": "./lib"
 	},
 	"dependencies": {
-		"always-tail": "~0.1.1",
 		"async": "~0.9.0",
-		"node-appc": "0.2.16",
-		"simple-plist": "~0.0.2"
+		"moment": "~2.8.3",
+		"node-appc": "0.2.20",
+		"node-uuid": "~1.4.1",
+		"wrench": "~1.5.8",
+		"xmldom": "~0.1.19"
 	},
 	"devDependencies": {
-		"mocha": "~1.21.4",
-		"should": "~4.0.4"
+		"mocha": "~2.0.1",
+		"should": "~4.3.0"
 	},
 	"scripts": {
 		"test": "mocha --require test/init --reporter spec --check-leaks test/",
+		"test-assemblies": "mocha --require test/init --reporter spec --check-leaks test/test-assemblies",
 		"test-device": "mocha --require test/init --reporter spec --check-leaks test/test-device",
-		"test-windowslib": "mocha --require test/init --reporter spec --check-leaks test/test-windowslib",
+		"test-emulator": "mocha --require test/init --reporter spec --check-leaks test/test-emulator",
+		"test-env": "mocha --require test/init --reporter spec --check-leaks test/test-env",
+		"test-logrelay": "mocha --require test/init --reporter spec --check-leaks test/test-logrelay",
+		"test-process": "mocha --require test/init --reporter spec --check-leaks test/test-process",
 		"test-visualstudio": "mocha --require test/init --reporter spec --check-leaks test/test-visualstudio",
-		"test-windowsphone": "mocha --require test/init --reporter spec --check-leaks test/test-windowsphone"
+		"test-windowsphone": "mocha --require test/init --reporter spec --check-leaks test/test-windowsphone",
+		"test-wptool": "mocha --require test/init --reporter spec --check-leaks test/test-wptool"
 	},
 	"engines": {
 		"node": ">=0.8"
