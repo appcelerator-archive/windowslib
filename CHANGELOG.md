@@ -1,3 +1,7 @@
+0.1.1 (11/12/2014)
+-------------------
+ * Fixed bug with installing Windows Store apps
+
 0.1.0 (11/12/2014)
 -------------------
  * Initial release of windowslib
