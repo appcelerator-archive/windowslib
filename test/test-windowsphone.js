@@ -48,8 +48,10 @@ describe('windowsphone', function () {
 					should(results.windowsphone[ver].path).not.equal('');
 					should(fs.existsSync(results.windowsphone[ver].path)).be.ok;
 
-					should(results.windowsphone[ver].deployCmd).be.a.String;
-					should(results.windowsphone[ver].deployCmd).not.equal('');
+					if (results.windowsphone[ver].deployCmd !== null) {
+						should(results.windowsphone[ver].deployCmd).be.a.String;
+						should(results.windowsphone[ver].deployCmd).not.equal('');
+					}
 
 					should(results.windowsphone[ver].selected).be.a.Boolean;
 				});
