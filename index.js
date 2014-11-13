@@ -151,6 +151,9 @@ function install(udid, appPath, options, callback) {
 			var installEmitter = type.install(udid, appPath, options, callback),
 				originalEmitter = installEmitter.emit;
 
+			// make sure we have at least one 'error' handler to keep longjohn from complaining
+			installEmitter.on('error', function () {});
+
 			installEmitter.emit = function () {
 				originalEmitter.apply(installEmitter, arguments);
 				emitter.emit.apply(emitter, arguments);
