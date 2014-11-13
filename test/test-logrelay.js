@@ -1,5 +1,5 @@
 /**
- * Tests windowslib's log relay module.
+ * Tests windowslib's logrelay module.
  *
  * @copyright
  * Copyright (c) 2014 by Appcelerator, Inc. All Rights Reserved.
