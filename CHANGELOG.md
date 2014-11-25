@@ -1,4 +1,4 @@
-Next Version
+0.1.2 (11/25/2014)
 -------------------
  * Added detection of the XapSignTool executable
 
