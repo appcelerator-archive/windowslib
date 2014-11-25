@@ -1,3 +1,7 @@
+Next Version
+-------------------
+ * Added detection of the XapSignTool executable
+
 0.1.1 (11/12/2014)
 -------------------
  * Fixed bug with installing Windows Store apps
