@@ -13,6 +13,7 @@ const
 	async        = require('async'),
 	EventEmitter = require('events').EventEmitter,
 	magik        = require('./lib/utilities').magik,
+	__ = appc.i18n(__dirname).__,
 
 	packageJson  = require('./package.json'),
 
