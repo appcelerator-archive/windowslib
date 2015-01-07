@@ -15,10 +15,6 @@ namespace wptool
 				return showHelp();
 			}
 
-			int localeId = CultureInfo.CurrentUICulture.LCID;
-			MultiTargetingConnectivity multiTargetingConnectivity = new MultiTargetingConnectivity(localeId);
-			Collection<ConnectableDevice> devices = multiTargetingConnectivity.GetConnectableDevices(false);
-
 			string command = null;
 			string wpsdk = null;
 			int udid = -1;
@@ -61,9 +57,13 @@ namespace wptool
 				}
 			}
 
+			int localeId = CultureInfo.CurrentUICulture.LCID;
+			MultiTargetingConnectivity multiTargetingConnectivity = new MultiTargetingConnectivity(localeId);
+			Collection<ConnectableDevice> devices = multiTargetingConnectivity.GetConnectableDevices(false);
+
 			List<ConnectableDevice> deviceList = new List<ConnectableDevice>();
 			i = 0;
-			foreach (ConnectableDevice dev in multiTargetingConnectivity.GetConnectableDevices(false)) {
+			foreach (ConnectableDevice dev in devices) {
 				if (!dev.IsEmulator() || (wpsdk == "8.0" && dev.IsLegacyEmulator()) || (wpsdk != "8.0" && !dev.IsLegacyEmulator())) {
 					deviceList.Add(dev);
 					i++;
