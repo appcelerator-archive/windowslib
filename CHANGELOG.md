@@ -1,3 +1,7 @@
+0.1.10 (3/18/2015)
+-------------------
+  * Fix [TIMOB-18706](https://jira.appcelerator.org/browse/TIMOB-18706) - Error when Windows Phone SDK is NOT installed
+
 0.1.9 (2/25/2015)
 -------------------
  * Update to node-appc 0.2.24
