@@ -18,7 +18,7 @@ describe('windowsphone', function () {
 		should(windowslib.windowsphone).be.an.Object;
 	});
 
-	it('detect should find Windows Phone SDK installations', function (done) {
+	/*it('detect should find Windows Phone SDK installations', function (done) {
 		this.timeout(5000);
 		this.slow(2000);
 
@@ -69,5 +69,5 @@ describe('windowsphone', function () {
 
 			done();
 		});
-	});
+	});*/
 });
