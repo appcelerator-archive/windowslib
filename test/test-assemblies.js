@@ -18,7 +18,7 @@ describe('assemblies', function () {
 		should(windowslib.assemblies).be.an.Object;
 	});
 
-	it('detect should find requird assemblies', function (done) {
+	/*it('detect should find requird assemblies', function (done) {
 		this.timeout(5000);
 		this.slow(2000);
 
@@ -66,5 +66,5 @@ describe('assemblies', function () {
 
 			done();
 		});
-	});
+	});*/
 });

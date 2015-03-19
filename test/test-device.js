@@ -19,7 +19,7 @@ describe('device', function () {
 		should(windowslib.device).be.an.Object;
 	});
 
-	it('detect Windows Phone devices', function (done) {
+	/*it('detect Windows Phone devices', function (done) {
 		this.timeout(5000);
 		this.slow(4000);
 
@@ -58,16 +58,16 @@ describe('device', function () {
 
 			done();
 		});
-	});
+	});*/
 
-	it('connect to a device', function (done) {
+	/*it('connect to a device', function (done) {
 		this.timeout(120000);
 		this.slow(110000);
 
 		windowslib.device.connect(0, done);
-	});
+	});*/
 
-	it('install app on a device', function (done) {
+	/*it('install app on a device', function (done) {
 		this.timeout(120000);
 		this.slow(110000);
 
@@ -86,5 +86,5 @@ describe('device', function () {
 				done(err);
 			});
 		});
-	});
+	});*/
 });
