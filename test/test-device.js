@@ -19,12 +19,7 @@ describe('device', function () {
 		should(windowslib.device).be.an.Object;
 	});
 
-	it('detect Windows Phone devices', function (done) {
-
-		if (process.platform !== 'win32') {
-			this.skip();
-		}
-
+	(process.platform === 'win32' ? it : it.skip)('detect Windows Phone devices', function (done) {
 		this.timeout(5000);
 		this.slow(4000);
 
@@ -65,24 +60,14 @@ describe('device', function () {
 		});
 	});
 
-	it('connect to a device', function (done) {
-
-		if (process.platform !== 'win32') {
-			this.skip();
-		}
-
+	(process.platform === 'win32' ? it : it.skip)('connect to a device', function (done) {
 		this.timeout(120000);
 		this.slow(110000);
 
 		windowslib.device.connect(0, done);
 	});
 
-	it('install app on a device', function (done) {
-
-		if (process.platform !== 'win32') {
-			this.skip();
-		}
-
+	(process.platform === 'win32' ? it : it.skip)('install app on a device', function (done) {
 		this.timeout(120000);
 		this.slow(110000);
 

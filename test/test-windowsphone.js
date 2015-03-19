@@ -18,12 +18,7 @@ describe('windowsphone', function () {
 		should(windowslib.windowsphone).be.an.Object;
 	});
 
-	it('detect should find Windows Phone SDK installations', function (done) {
-
-		if (process.platform !== 'win32') {
-			this.skip();
-		}
-
+	(process.platform === 'win32' ? it : it.skip)('detect should find Windows Phone SDK installations', function (done) {
 		this.timeout(5000);
 		this.slow(2000);
 

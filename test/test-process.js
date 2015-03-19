@@ -16,12 +16,7 @@ describe('process', function () {
 		should(windowslib.process).be.an.Object;
 	});
 
-	it('list all processes', function (done) {
-
-		if (process.platform !== 'win32') {
-			this.skip();
-		}
-
+	(process.platform === 'win32' ? it : it.skip)('list all processes', function (done) {
 		this.timeout(5000);
 		this.slow(4000);
 

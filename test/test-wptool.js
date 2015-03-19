@@ -18,12 +18,7 @@ describe('wptool', function () {
 		should(windowslib.wptool).be.an.Object;
 	});
 
-	it('should enumerate all Windows Phone devices and emulators', function (done) {
-
-		if (process.platform !== 'win32') {
-			this.skip();
-		}
-
+	(process.platform === 'win32' ? it : it.skip)('should enumerate all Windows Phone devices and emulators', function (done) {
 		this.timeout(5000);
 		this.slow(4000);
 
