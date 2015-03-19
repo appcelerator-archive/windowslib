@@ -20,7 +20,12 @@ describe('emulator', function () {
 		should(windowslib.emulator).be.an.Object;
 	});
 
-	/*it('detect Windows Phone emulators', function (done) {
+	it('detect Windows Phone emulators', function (done) {
+
+		if (process.platform !== 'win32') {
+			this.skip();
+		}
+
 		this.timeout(5000);
 		this.slow(4000);
 
@@ -61,9 +66,14 @@ describe('emulator', function () {
 
 			done();
 		});
-	});*/
+	});
 
-	/*it('detect if emulator is running', function (done) {
+	it('detect if emulator is running', function (done) {
+
+		if (process.platform !== 'win32') {
+			this.skip();
+		}
+
 		this.timeout(5000);
 		this.slow(4000);
 
@@ -82,7 +92,7 @@ describe('emulator', function () {
 				done(err);
 			});
 		});
-	});*/
+	});
 
 	it('should shutdown specified emulator', function (done) {
 		this.timeout(5000);
@@ -95,7 +105,12 @@ describe('emulator', function () {
 		});
 	});
 
-	/*it('launch and shutdown emulator', function (done) {
+	it('launch and shutdown emulator', function (done) {
+
+		if (process.platform !== 'win32') {
+			this.skip();
+		}
+
 		this.timeout(120000);
 		this.slow(110000);
 
@@ -137,9 +152,14 @@ describe('emulator', function () {
 				});
 			});
 		});
-	});*/
+	});
 
-	/*it('launch emulator, then install app via install, then shutdown emulator', function (done) {
+	it('launch emulator, then install app via install, then shutdown emulator', function (done) {
+
+		if (process.platform !== 'win32') {
+			this.skip();
+		}
+
 		this.timeout(120000);
 		this.slow(110000);
 
@@ -204,9 +224,14 @@ describe('emulator', function () {
 		], function (err) {
 			done(err);
 		});
-	});*/
+	});
 
-	/*it('launch emulator, then install app via launch, then shutdown emulator', function (done) {
+	it('launch emulator, then install app via launch, then shutdown emulator', function (done) {
+
+		if (process.platform !== 'win32') {
+			this.skip();
+		}
+
 		this.timeout(120000);
 		this.slow(110000);
 
@@ -289,5 +314,5 @@ describe('emulator', function () {
 		], function (err) {
 			done(err);
 		});
-	});*/
+	});
 });

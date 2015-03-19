@@ -16,7 +16,12 @@ describe('process', function () {
 		should(windowslib.process).be.an.Object;
 	});
 
-	/*it('list all processes', function (done) {
+	it('list all processes', function (done) {
+
+		if (process.platform !== 'win32') {
+			this.skip();
+		}
+
 		this.timeout(5000);
 		this.slow(4000);
 
@@ -33,5 +38,5 @@ describe('process', function () {
 
 			done();
 		});
-	});*/
+	});
 });

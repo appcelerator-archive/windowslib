@@ -18,7 +18,12 @@ describe('visualstudio', function () {
 		should(windowslib.visualstudio).be.an.Object;
 	});
 
-	/*it('detect should find Visual Studio installations', function (done) {
+	it('detect should find Visual Studio installations', function (done) {
+
+		if (process.platform !== 'win32') {
+			this.skip();
+		}
+
 		this.timeout(5000);
 		this.slow(2000);
 
@@ -52,7 +57,7 @@ describe('visualstudio', function () {
 
 			done();
 		});
-	});*/
+	});
 });
 
 function checkVisualStudio(visualstudio) {

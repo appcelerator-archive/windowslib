@@ -18,7 +18,12 @@ describe('wptool', function () {
 		should(windowslib.wptool).be.an.Object;
 	});
 
-	/*it('should enumerate all Windows Phone devices and emulators', function (done) {
+	it('should enumerate all Windows Phone devices and emulators', function (done) {
+
+		if (process.platform !== 'win32') {
+			this.skip();
+		}
+
 		this.timeout(5000);
 		this.slow(4000);
 
@@ -53,7 +58,7 @@ describe('wptool', function () {
 
 			done();
 		});
-	});*/
+	});
 
 	it('should not connect to a device with a bad udid', function (done) {
 		this.timeout(5000);
@@ -68,12 +73,17 @@ describe('wptool', function () {
 		}).on('error', function () {}); // squeltch mocha
 	});
 
-	/*it('should connect to a device with a valid udid', function (done) {
+	it('should connect to a device with a valid udid', function (done) {
+
+		if (process.platform !== 'win32') {
+			this.skip();
+		}
+
 		this.timeout(10000);
 		this.slow(9000);
 
 		windowslib.wptool.connect('0', function (err) {
 			done(err);
 		}).on('error', function () {}); // squeltch mocha
-	});*/
+	});
 });
