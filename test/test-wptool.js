@@ -68,12 +68,7 @@ describe('wptool', function () {
 		}).on('error', function () {}); // squeltch mocha
 	});
 
-	it('should connect to a device with a valid udid', function (done) {
-
-		if (process.platform !== 'win32') {
-			this.skip();
-		}
-
+	(process.platform === 'win32' ? it : it.skip)('should connect to a device with a valid udid', function (done) {
 		this.timeout(10000);
 		this.slow(9000);
 
