@@ -1,3 +1,7 @@
+0.1.11 (4/16/2015)
+-------------------
+  * Fix [TIMOB-18822](https://jira.appcelerator.org/browse/TIMOB-18822) - Added check so that os name and powershell info is only detected on Windows 8 or newer.
+
 0.1.10 (3/18/2015)
 -------------------
   * Fix [TIMOB-18706](https://jira.appcelerator.org/browse/TIMOB-18706) - Error when Windows Phone SDK is NOT installed
