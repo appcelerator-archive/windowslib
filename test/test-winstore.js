@@ -54,7 +54,6 @@ describe('winstore', function () {
 					}
 
 					should(results.windows[ver].selected).be.a.Boolean;
-					console.log(results.windows[ver]);
 				});
 			}
 
