@@ -49,8 +49,8 @@ describe('winstore', function () {
 					should(fs.existsSync(results.windows[ver].path)).be.ok;
 
 					if (results.windows[ver].signTool !== null) {
-						should(results.windows[ver].signTool).be.a.String;
-						should(results.windows[ver].signTool).not.equal('');
+						should(results.windows[ver].signTool).be.an.Object;
+						should(results.windows[ver].signTool.x86).be.a.String;
 					}
 
 					should(results.windows[ver].selected).be.a.Boolean;
