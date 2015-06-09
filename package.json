@@ -18,7 +18,8 @@
 	},
 	"maintainers": [
 		{"name": "Chris Barber", "email": "cbarber@appcelerator.com"},
-		{"name": "Chris Williams", "email": "cwilliams@appcelerator.com"}
+		{"name": "Chris Williams", "email": "cwilliams@appcelerator.com"},
+		{"name": "Dawson Toth", "email": "dtoth@appcelerator.com"}
 	],
 	"repository": {
 		"type": "git",

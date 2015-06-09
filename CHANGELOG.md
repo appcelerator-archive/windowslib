@@ -1,6 +1,7 @@
 0.1.12 (6/9/2015)
 -------------------
   * Fix [TIMOB-18958](https://jira.appcelerator.org/browse/TIMOB-18958) -  Windows: CLI builds hang on first try due to Powershell permission check in windowslib
+  * Expand Win Store Tooling Detection
 
 0.1.11 (4/16/2015)
 -------------------
