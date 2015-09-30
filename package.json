@@ -1,6 +1,6 @@
 {
 	"name": "windowslib",
-	"version": "0.1.15",
+	"version": "0.1.16",
 	"description": "Windows Phone Utility Library",
 	"keywords": [
 		"appcelerator",
@@ -19,7 +19,8 @@
 	"maintainers": [
 		{"name": "Chris Barber", "email": "cbarber@appcelerator.com"},
 		{"name": "Chris Williams", "email": "cwilliams@appcelerator.com"},
-		{"name": "Dawson Toth", "email": "dtoth@appcelerator.com"}
+		{"name": "Dawson Toth", "email": "dtoth@appcelerator.com"},
+		{"name": "Kota Iguchi", "email": "kiguchi@appcelerator.com"}
 	],
 	"repository": {
 		"type": "git",

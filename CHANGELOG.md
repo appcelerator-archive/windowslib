@@ -1,3 +1,7 @@
+0.1.16 (9/30/2015)
+-------------------
+  * Add Windows 10 SDK as option, list WIndows 10 emulators for 10/8.1: https://github.com/appcelerator/windowslib/pull/21
+
 0.1.15 (6/29/2015)
 -------------------
   * Fix for [TIMOB-19090](https://jira.appcelerator.org/browse/TIMOB-19090) - Windows: Building for ws-local fails with powershell error 'Read-Host : Windows PowerShell is in NonInteractive mode'
