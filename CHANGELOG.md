@@ -1,6 +1,10 @@
+0.1.17 (9/30/2015)
+-------------------
+  * Line up dependencies to match titanium_mobile's dependencies.
+
 0.1.16 (9/30/2015)
 -------------------
-  * Add Windows 10 SDK as option, list WIndows 10 emulators for 10/8.1: https://github.com/appcelerator/windowslib/pull/21
+  * Add Windows 10 SDK as option, list Windows 10 emulators for 10/8.1: https://github.com/appcelerator/windowslib/pull/21
 
 0.1.15 (6/29/2015)
 -------------------
