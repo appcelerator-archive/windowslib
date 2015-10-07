@@ -1,3 +1,7 @@
+0.1.19 (10/7/2015)
+-------------------
+  * Line up dependencies to match titanium_mobile's dependencies.
+
 0.1.18 (10/7/2015)
 -------------------
   * [Remove error message for Windows Store deploy command](https://github.com/appcelerator/windowslib/pull/23)
