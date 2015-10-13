@@ -56,6 +56,7 @@
 		"test-process": "mocha --require test/init --reporter spec --check-leaks test/test-process",
 		"test-visualstudio": "mocha --require test/init --reporter spec --check-leaks test/test-visualstudio",
 		"test-windowsphone": "mocha --require test/init --reporter spec --check-leaks test/test-windowsphone",
+		"test-winstore": "mocha --require test/init --reporter spec --check-leaks test/test-winstore",
 		"test-wptool": "mocha --require test/init --reporter spec --check-leaks test/test-wptool"
 	},
 	"engines": {
