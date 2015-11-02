@@ -1,6 +1,6 @@
 {
 	"name": "windowslib",
-	"version": "0.1.21",
+	"version": "0.1.22",
 	"description": "Windows Phone Utility Library",
 	"keywords": [
 		"appcelerator",
@@ -37,7 +37,7 @@
 	"dependencies": {
 		"async": "1.4.2",
 		"moment": "2.10.6",
-		"node-appc": "0.2.32",
+		"node-appc": "~0.2.33",
 		"node-uuid": "1.4.3",
 		"wrench": "1.5.8",
 		"xmldom": "0.1.19"
