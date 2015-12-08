@@ -2,7 +2,7 @@
  * Tests windowslib's emulator module.
  *
  * @copyright
- * Copyright (c) 2014 by Appcelerator, Inc. All Rights Reserved.
+ * Copyright (c) 2014-2015 by Appcelerator, Inc. All Rights Reserved.
  *
  * @license
  * Licensed under the terms of the Apache Public License.
@@ -13,7 +13,14 @@ const
 	async = require('async'),
 	fs = require('fs'),
 	path = require('path'),
-	windowslib = require('..');
+	windowslib = require('..'),
+	WIN_10 = '10.0',
+	WIN_8_1 = '8.1',
+	WIN_8 = '8.0',
+	WIN_10_PROJECT = path.join(__dirname, 'TestApp10.0', 'TestApp10.0.vcxproj'),
+	WIN_8_PROJECT = path.join(__dirname, 'TestApp', 'TestApp.csproj'),
+	WIN_10_APPX = path.join(__dirname, 'TestApp10.0', 'AppPackages', 'TestApp10.0', 'TestApp10.0_1.0.0.0_Win32_Debug_Test', 'TestApp10.0_1.0.0.0_Win32_Debug.appx'),
+	WIN_8_XAP = path.join(__dirname, 'TestApp', 'Bin', 'Debug', 'TestApp_Debug_AnyCPU.xap');
 
 describe('emulator', function () {
 	it('namespace should be an object', function () {
@@ -37,7 +44,10 @@ describe('emulator', function () {
 				should(results.emulators[ver]).be.an.Array;
 				results.emulators[ver].forEach(function (emu) {
 					should(emu).be.an.Object;
-					should(emu).have.keys('name', 'udid', 'index', 'wpsdk');
+					should(emu).have.ownProperty('name');
+					should(emu).have.ownProperty('udid');
+					should(emu).have.ownProperty('index');
+					should(emu).have.ownProperty('wpsdk');
 
 					should(emu.name).be.a.String;
 					should(emu.name).not.equal('');
@@ -111,12 +121,11 @@ describe('emulator', function () {
 				return done(err);
 			}
 
-			var emu, wpsdk;
-			for (wpsdk in results.emulators) {
-				if (results.emulators[wpsdk].length > 0) {
-					emu = results.emulators[wpsdk][0];
-					break;
-				}
+			var wpsdk = WIN_10,
+				emu;
+
+			if (results.emulators[wpsdk].length > 0) {
+				emu = results.emulators[wpsdk][0];
 			}
 
 			should(emu).be.an.Object;
@@ -126,11 +135,7 @@ describe('emulator', function () {
 					return done(err);
 				}
 
-				if (running) {
-					return done(new Error('Expected the emulator to not be running'));
-				}
-
-				windowslib.emulator.launch(null, { killIfRunning: true }, function (err, emuHandle) {
+				windowslib.emulator.launch(emu.udid, { killIfRunning: true }, function (err, emuHandle) {
 					if (err) {
 						return done(err);
 					}
@@ -157,8 +162,8 @@ describe('emulator', function () {
 		this.timeout(120000);
 		this.slow(110000);
 
-		var xapFile = path.join(__dirname, 'TestApp', 'Bin', 'Debug', 'TestApp_Debug_AnyCPU.xap'),
-			wpsdk,
+		var xapFile = WIN_10_APPX,
+			wpsdk = WIN_10,
 			emu,
 			emuHandle;
 
@@ -166,7 +171,7 @@ describe('emulator', function () {
 			function (next) {
 				windowslib.visualstudio.build({
 					buildConfiguration: 'Debug',
-					project: path.join(__dirname, 'TestApp', 'TestApp.csproj')
+					project: WIN_10_PROJECT
 				}, function (err, result) {
 					next(err);
 				});
@@ -180,11 +185,8 @@ describe('emulator', function () {
 			function (next) {
 				windowslib.emulator.detect(function (err, results) {
 					if (!err) {
-						for (wpsdk in results.emulators) {
-							if (results.emulators[wpsdk].length > 0) {
-								emu = results.emulators[wpsdk][0];
-								break;
-							}
+						if (results.emulators[wpsdk].length > 0) {
+							emu = results.emulators[wpsdk][0];
 						}
 					}
 					next(err);
@@ -192,7 +194,7 @@ describe('emulator', function () {
 			},
 
 			function (next) {
-				windowslib.emulator.install(null, xapFile, { killIfRunning: true, wpsdk: wpsdk }, function (err, _emuHandle) {
+				windowslib.emulator.install(emu.udid, xapFile, { killIfRunning: true, wpsdk: wpsdk }, function (err, _emuHandle) {
 					emuHandle = _emuHandle;
 					next(err);
 				});
@@ -228,8 +230,8 @@ describe('emulator', function () {
 		this.timeout(120000);
 		this.slow(110000);
 
-		var xapFile = path.join(__dirname, 'TestApp', 'Bin', 'Debug', 'TestApp_Debug_AnyCPU.xap'),
-			wpsdk,
+		var xapFile = WIN_10_APPX,
+			wpsdk = WIN_10,
 			emu,
 			emuHandle;
 
@@ -237,7 +239,7 @@ describe('emulator', function () {
 			function (next) {
 				windowslib.visualstudio.build({
 					buildConfiguration: 'Debug',
-					project: path.join(__dirname, 'TestApp', 'TestApp.csproj')
+					project: WIN_10_PROJECT
 				}, function (err, result) {
 					next(err);
 				});
@@ -251,11 +253,8 @@ describe('emulator', function () {
 			function (next) {
 				windowslib.emulator.detect(function (err, results) {
 					if (!err) {
-						for (wpsdk in results.emulators) {
-							if (results.emulators[wpsdk].length > 0) {
-								emu = results.emulators[wpsdk][0];
-								break;
-							}
+						if (results.emulators[wpsdk].length > 0) {
+							emu = results.emulators[wpsdk][0];
 						}
 					}
 					next(err);
