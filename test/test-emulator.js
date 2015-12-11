@@ -17,10 +17,16 @@ const
 	WIN_10 = '10.0',
 	WIN_8_1 = '8.1',
 	WIN_8 = '8.0',
-	WIN_10_PROJECT = path.join(__dirname, 'TestApp10.0', 'TestApp10.0.vcxproj'),
-	WIN_8_PROJECT = path.join(__dirname, 'TestApp', 'TestApp.csproj'),
-	WIN_10_APPX = path.join(__dirname, 'TestApp10.0', 'AppPackages', 'TestApp10.0', 'TestApp10.0_1.0.0.0_Win32_Debug_Test', 'TestApp10.0_1.0.0.0_Win32_Debug.appx'),
-	WIN_8_XAP = path.join(__dirname, 'TestApp', 'Bin', 'Debug', 'TestApp_Debug_AnyCPU.xap');
+	PROJECTS = {
+		'8.0': path.join(__dirname, 'TestApp', 'TestApp.csproj'),
+		'8.1': path.join(__dirname, 'TestApp', 'TestApp.csproj'), // FIXME Create an 8.1 project?
+		'10.0': path.join(__dirname, 'TestApp10.0', 'TestApp10.0.vcxproj')
+	},
+	APPS = {
+		'8.0': path.join(__dirname, 'TestApp', 'Bin', 'Debug', 'TestApp_Debug_AnyCPU.xap'),
+		'8.1': path.join(__dirname, 'TestApp', 'Bin', 'Debug', 'TestApp_Debug_AnyCPU.xap'), // FIXME Create an 8.1 project?
+		'10.0': path.join(__dirname, 'TestApp10.0', 'AppPackages', 'TestApp10.0', 'TestApp10.0_1.0.0.0_Win32_Debug_Test', 'TestApp10.0_1.0.0.0_Win32_Debug.appx')
+	};
 
 describe('emulator', function () {
 	it('namespace should be an object', function () {
@@ -101,7 +107,7 @@ describe('emulator', function () {
 		});
 	});
 
-	it('should shutdown specified emulator', function (done) {
+	(process.platform === 'win32' ? it : it.skip)('should shutdown specified emulator', function (done) {
 		this.timeout(5000);
 		this.slow(4000);
 
@@ -111,24 +117,48 @@ describe('emulator', function () {
 			done();
 		});
 	});
+});
 
-	(process.platform === 'win32' ? it : it.skip)('launch and shutdown emulator', function (done) {
-		this.timeout(120000);
-		this.slow(110000);
+[WIN_8, WIN_8_1, WIN_10].forEach(function (wpsdk) {
+	// suite
+	(process.platform === 'win32' ? describe : describe.skip)(wpsdk + ' emulator launching', function () {
+		var emu;
 
-		windowslib.emulator.detect(function (err, results) {
-			if (err) {
-				return done(err);
+		// Grab the emulator
+		before(function (done) {
+			windowslib.emulator.detect(function (err, results) {
+				if (err) {
+					return done(err);
+				}
+
+				if (results.emulators[wpsdk].length > 0) {
+					emu = results.emulators[wpsdk][0];
+				}
+				done();
+			});
+		});
+
+		// Shut down the emulator
+		before(function (done) {
+			if (!emu) {
+				return done();
 			}
 
-			var wpsdk = WIN_10,
-				emu;
+			windowslib.emulator.stop({
+				name: emu.name
+			}, function () {
+				done();
+			});
+		});
 
-			if (results.emulators[wpsdk].length > 0) {
-				emu = results.emulators[wpsdk][0];
+		it('launch and shutdown emulator', function (done) {
+			this.timeout(120000);
+			this.slow(110000);
+
+			if (!emu) {
+				this.skip();
+				done();
 			}
-
-			should(emu).be.an.Object;
 
 			windowslib.emulator.isRunning(emu.udid, function (err, running) {
 				if (err) {
@@ -156,159 +186,143 @@ describe('emulator', function () {
 				});
 			});
 		});
-	});
 
-	(process.platform === 'win32' ? it : it.skip)('launch emulator, then install app via install, then shutdown emulator', function (done) {
-		this.timeout(120000);
-		this.slow(110000);
+		it('launch emulator, then install app via install, then shutdown emulator', function (done) {
+			this.timeout(120000);
+			this.slow(110000);
 
-		var xapFile = WIN_10_APPX,
-			wpsdk = WIN_10,
-			emu,
-			emuHandle;
-
-		async.series([
-			function (next) {
-				windowslib.visualstudio.build({
-					buildConfiguration: 'Debug',
-					project: WIN_10_PROJECT
-				}, function (err, result) {
-					next(err);
-				});
-			},
-
-			function (next) {
-				should(fs.existsSync(xapFile)).be.ok;
-				next();
-			},
-
-			function (next) {
-				windowslib.emulator.detect(function (err, results) {
-					if (!err) {
-						if (results.emulators[wpsdk].length > 0) {
-							emu = results.emulators[wpsdk][0];
-						}
-					}
-					next(err);
-				});
-			},
-
-			function (next) {
-				windowslib.emulator.install(emu.udid, xapFile, { killIfRunning: true, wpsdk: wpsdk }, function (err, _emuHandle) {
-					emuHandle = _emuHandle;
-					next(err);
-				});
-			},
-
-			function (next) {
-				setTimeout(function () { next(); }, 1000);
-			},
-
-			function (next) {
-				windowslib.emulator.isRunning(emuHandle.udid, function (err, running) {
-					if (err) {
-						next(err);
-					} else if (!running) {
-						next(new Error('Expected the emulator to be running'));
-					} else {
-						next();
-					}
-				});
-			},
-
-			function (next) {
-				windowslib.emulator.stop(emuHandle, function () {
-					done();
-				});
+			if (!emu) {
+				this.skip();
+				done();
 			}
-		], function (err) {
-			done(err);
-		});
-	});
 
-	(process.platform === 'win32' ? it : it.skip)('launch emulator, then install app via launch, then shutdown emulator', function (done) {
-		this.timeout(120000);
-		this.slow(110000);
+			var xapFile = APPS[wpsdk],
+				emuHandle;
 
-		var xapFile = WIN_10_APPX,
-			wpsdk = WIN_10,
-			emu,
-			emuHandle;
+			async.series([
+				function (next) {
+					windowslib.visualstudio.build({
+						buildConfiguration: 'Debug',
+						project: PROJECTS[wpsdk]
+					}, function (err, result) {
+						next(err);
+					});
+				},
 
-		async.series([
-			function (next) {
-				windowslib.visualstudio.build({
-					buildConfiguration: 'Debug',
-					project: WIN_10_PROJECT
-				}, function (err, result) {
-					next(err);
-				});
-			},
+				function (next) {
+					should(fs.existsSync(xapFile)).be.ok;
+					next();
+				},
 
-			function (next) {
-				should(fs.existsSync(xapFile)).be.ok;
-				next();
-			},
+				function (next) {
+					windowslib.emulator.install(emu.udid, xapFile, { killIfRunning: true, wpsdk: wpsdk }, function (err, _emuHandle) {
+						emuHandle = _emuHandle;
+						next(err);
+					});
+				},
 
-			function (next) {
-				windowslib.emulator.detect(function (err, results) {
-					if (!err) {
-						if (results.emulators[wpsdk].length > 0) {
-							emu = results.emulators[wpsdk][0];
+				function (next) {
+					setTimeout(function () { next(); }, 1000);
+				},
+
+				function (next) {
+					windowslib.emulator.isRunning(emuHandle.udid, function (err, running) {
+						if (err) {
+							next(err);
+						} else if (!running) {
+							next(new Error('Expected the emulator to be running'));
+						} else {
+							next();
 						}
-					}
-					next(err);
-				});
-			},
+					});
+				},
 
-			function (next) {
-				windowslib.emulator.launch(null, { killIfRunning: true, wpsdk: wpsdk }, function (err, _emuHandle) {
-					emuHandle = _emuHandle;
-					next(err);
-				});
-			},
-
-			function (next) {
-				windowslib.emulator.isRunning(emuHandle.udid, function (err, running) {
-					if (err) {
-						next(err);
-					} else if (!running) {
-						next(new Error('Expected the emulator to be running'));
-					} else {
-						next();
-					}
-				});
-			},
-
-			function (next) {
-				windowslib.emulator.launch(emuHandle.udid, { appPath: xapFile, killIfRunning: false, wpsdk: wpsdk }, function (err, _emuHandle) {
-					next(err);
-				});
-			},
-
-			function (next) {
-				setTimeout(function () { next(); }, 1000);
-			},
-
-			function (next) {
-				windowslib.emulator.isRunning(emuHandle.udid, function (err, running) {
-					if (err) {
-						next(err);
-					} else if (!running) {
-						next(new Error('Expected the emulator to be running'));
-					} else {
-						next();
-					}
-				});
-			},
-
-			function (next) {
-				windowslib.emulator.stop(emuHandle, function () {
-					done();
-				});
-			}
-		], function (err) {
-			done(err);
+				function (next) {
+					windowslib.emulator.stop(emuHandle, function () {
+						done();
+					});
+				}
+			], function (err) {
+				done(err);
+			});
 		});
-	});
-});
+
+		it('launch emulator, then install app via launch, then shutdown emulator', function (done) {
+			this.timeout(120000);
+			this.slow(110000);
+
+			if (!emu) {
+				this.skip();
+				done();
+			}
+
+			var xapFile = APPS[wpsdk],
+				emuHandle;
+
+			async.series([
+				function (next) {
+					windowslib.visualstudio.build({
+						buildConfiguration: 'Debug',
+						project: PROJECTS[wpsdk]
+					}, function (err, result) {
+						next(err);
+					});
+				},
+
+				function (next) {
+					should(fs.existsSync(xapFile)).be.ok;
+					next();
+				},
+
+				function (next) {
+					windowslib.emulator.launch(null, { killIfRunning: true, wpsdk: wpsdk }, function (err, _emuHandle) {
+						emuHandle = _emuHandle;
+						next(err);
+					});
+				},
+
+				function (next) {
+					windowslib.emulator.isRunning(emuHandle.udid, function (err, running) {
+						if (err) {
+							next(err);
+						} else if (!running) {
+							next(new Error('Expected the emulator to be running'));
+						} else {
+							next();
+						}
+					});
+				},
+
+				function (next) {
+					windowslib.emulator.launch(emuHandle.udid, { appPath: xapFile, killIfRunning: false, wpsdk: wpsdk }, function (err, _emuHandle) {
+						next(err);
+					});
+				},
+
+				function (next) {
+					setTimeout(function () { next(); }, 1000);
+				},
+
+				function (next) {
+					windowslib.emulator.isRunning(emuHandle.udid, function (err, running) {
+						if (err) {
+							next(err);
+						} else if (!running) {
+							next(new Error('Expected the emulator to be running'));
+						} else {
+							next();
+						}
+					});
+				},
+
+				function (next) {
+					windowslib.emulator.stop(emuHandle, function () {
+						done();
+					});
+				}
+			], function (err) {
+				done(err);
+			});
+		});
+	}); // end suite
+}); // forEach
