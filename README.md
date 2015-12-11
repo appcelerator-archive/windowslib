@@ -59,7 +59,7 @@ windowslib.device.detect(function (err, devices) {
 ```javascript
 var deviceUDID = null; // string or null to pick first device
 
-windowslib.device.install(deviceUDID, 'C:\\path\\to\\zapfile.zap')
+windowslib.device.install(deviceUDID, 'C:\\path\\to\\appfile.appx')
 	.on('installed', function () {
 		console.log('App successfully installed on device');
 	})
@@ -86,7 +86,7 @@ windowslib.emulator.launch(null, function (err, handle) {
 ```javascript
 var udid = null; // string or null to pick an emulator
 
-windowslib.emulator.install(udid, 'C:\\path\\to\\zapfile.zap')
+windowslib.emulator.install(udid, 'C:\\path\\to\\appfile.appx')
 	.on('launched', function (msg) {
 		console.log('Emulator has launched');
 	})

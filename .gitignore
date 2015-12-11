@@ -7,8 +7,16 @@ bin/wptool.exe
 bin/wstool.exe
 wptool/bin
 wptool/obj
+wptool/.vs
+wptool/wptool.sln
 wstool/bin
 wstool/obj
 test/TestApp/Bin
 test/TestApp/obj
+test/TestApp10.0/Bin
+test/TestApp10.0/obj
+test/TestApp10.0/AppPackages
+test/TestApp10.0/Debug
+test/TestApp10.0/Release
+test/TestApp10.0/Generated Files
 .idea
