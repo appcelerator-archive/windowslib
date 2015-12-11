@@ -19,7 +19,7 @@ namespace wptool
 			string command = null;
 			string wpsdk = null;
 			string udid = null;
-            string appid = null;
+			string appid = null;
 			int i;
 
 			for (i = 0; i < args.Length; i++) {
@@ -32,12 +32,12 @@ namespace wptool
 					if (command == "connect" && i + 1 < args.Length) {
 						udid = args[++i];
 					}
-                    else if (command == "launch" && i + 1 < args.Length)
-                    {
-                        udid = args[++i];
-                        appid = args[++i];
-                    }
-                }
+					else if (command == "launch" && i + 1 < args.Length)
+					{
+						udid = args[++i];
+						appid = args[++i];
+					}
+				}
 			}
 
 			if (wpsdk == null) {
@@ -59,21 +59,21 @@ namespace wptool
 					i++;
 				}
 			}
-            if (!wpsdk.Equals("10.0") && !wpsdk.Equals("8.1"))
-            {
-                return showHelp("Unsupported wpsdk value. Please use '10.0' or '8.1'.");
-            }
+			if (!wpsdk.Equals("10.0") && !wpsdk.Equals("8.1"))
+			{
+				return showHelp("Unsupported wpsdk value. Please use '10.0' or '8.1'.");
+			}
 
-            int localeId = CultureInfo.CurrentUICulture.LCID;
-            MultiTargetingConnectivity multiTargetingConnectivity = new MultiTargetingConnectivity(localeId);
-            Collection<ConnectableDevice> devices = multiTargetingConnectivity.GetConnectableDevices();
+			int localeId = CultureInfo.CurrentUICulture.LCID;
+			MultiTargetingConnectivity multiTargetingConnectivity = new MultiTargetingConnectivity(localeId);
+			Collection<ConnectableDevice> devices = multiTargetingConnectivity.GetConnectableDevices();
 
-            List<ConnectableDevice> deviceList = new List<ConnectableDevice>();
+			List<ConnectableDevice> deviceList = new List<ConnectableDevice>();
 			i = 0;
 			foreach (ConnectableDevice dev in devices) {
-                // Filter to device and emulators that match the given SDK. We use 6.3 Version as the marker for 8.1 emus, assume rest are 10.0
-                string versionString = dev.Version.ToString();
-                if (!dev.IsEmulator() || (wpsdk == "8.1" && versionString.Equals("6.3")) || (wpsdk == "10.0" && !versionString.Equals("6.3"))) {
+				// Filter to device and emulators that match the given SDK. We use 6.3 Version as the marker for 8.1 emus, assume rest are 10.0
+				string versionString = dev.Version.ToString();
+				if (!dev.IsEmulator() || (wpsdk == "8.1" && versionString.Equals("6.3")) || (wpsdk == "10.0" && !versionString.Equals("6.3"))) {
 					deviceList.Add(dev);
 					i++;
 				}
@@ -117,79 +117,79 @@ namespace wptool
 						Console.WriteLine("\t\t\t\"name\": \"" + dev.Name.Replace("\"", "\\\"") + "\",");
 						Console.WriteLine("\t\t\t\"udid\": \"" + wpsdk.Replace('.', '-') + "-" + id + "\",");
 						Console.WriteLine("\t\t\t\"index\": " + id + ",");
-                        Console.WriteLine("\t\t\t\"guid\": \"" + dev.Id + "\",");
-                        Console.WriteLine("\t\t\t\"version\": \"" + dev.Version + "\","); // 6.3 for 8.1 emulators, 6.4 for 10 emulators, 2147483647.2147483647.2147483647.2147483647 for device
-                        Console.WriteLine("\t\t\t\"uapVersion\": \"" + dev.UapVersion + "\","); // blank/empty for 8.1 emulators and device, 10.0.10586.0 for win 10 emulators
-                        Console.WriteLine("\t\t\t\"wpsdk\": \"" + wpsdk + "\"");
+						Console.WriteLine("\t\t\t\"guid\": \"" + dev.Id + "\",");
+						Console.WriteLine("\t\t\t\"version\": \"" + dev.Version + "\","); // 6.3 for 8.1 emulators, 6.4 for 10 emulators, 2147483647.2147483647.2147483647.2147483647 for device
+						Console.WriteLine("\t\t\t\"uapVersion\": \"" + dev.UapVersion + "\","); // blank/empty for 8.1 emulators and device, 10.0.10586.0 for win 10 emulators
+						Console.WriteLine("\t\t\t\"wpsdk\": \"" + wpsdk + "\"");
 						Console.Write("\t\t}");
 						j++;
 					}
 					id++;
 				}
 				Console.WriteLine("\n\t]");
-				
+
 				Console.WriteLine("}");
 				return 0;
 			}
 
-            // This won't just connect, it will launch the emulator!
+			// This won't just connect, it will launch the emulator!
 			if (command == "connect" || command == "launch") {
 				if (udid == null) {
 					return showHelp("Missing device/emulator UDID");
 				}
-                // TODO Validate that the udid is either our generated udid (i.e. 10-0-1), or it's GUID, or it's an integer index value!
+				// TODO Validate that the udid is either our generated udid (i.e. 10-0-1), or it's GUID, or it's an integer index value!
 
-                int id = 0;
-                // Search devices for udid!
-                ConnectableDevice connectableDevice = null;
-                foreach (ConnectableDevice dev in deviceList) {
-                    // Is it a matching GUID, matching UDID or matching Index value?
-                    if (dev.Id.Equals(udid) || (wpsdk.Replace('.', '-') + "-" + id).Equals(udid) || udid.Equals(id.ToString()))
-                    {
-                        connectableDevice = dev;
-                        break;
-                    }
-                    id++;
-                }
-                if (connectableDevice == null)
-                {
-                    return showHelp(String.Format("Invalid device UDID '{0:D}'", udid));
-                }
+				int id = 0;
+				// Search devices for udid!
+				ConnectableDevice connectableDevice = null;
+				foreach (ConnectableDevice dev in deviceList) {
+					// Is it a matching GUID, matching UDID or matching Index value?
+					if (dev.Id.Equals(udid) || (wpsdk.Replace('.', '-') + "-" + id).Equals(udid) || udid.Equals(id.ToString()))
+					{
+						connectableDevice = dev;
+						break;
+					}
+					id++;
+				}
+				if (connectableDevice == null)
+				{
+					return showHelp(String.Format("Invalid device UDID '{0:D}'", udid));
+				}
 
-                try {
-                    IDevice device = connectableDevice.Connect();
+				try {
+					IDevice device = connectableDevice.Connect();
 
-                    if (command == "launch")
-                    {
-                        IRemoteApplication app = device.GetApplication(Guid.Parse(appid));
-                        app.Launch();
-                        Console.WriteLine("{");
-                        Console.WriteLine("\t\"success\": true");
-                        Console.WriteLine("}");
-                    } else {
-                        string destinationIp;
-                        string sourceIp;
-                        int destinationPort;
-                        device.GetEndPoints(0, out sourceIp, out destinationIp, out destinationPort);
-                        var address = IPAddress.Parse(destinationIp);
-                        ISystemInfo systemInfo = device.GetSystemInfo();
+					if (command == "launch")
+					{
+						IRemoteApplication app = device.GetApplication(Guid.Parse(appid));
+						app.Launch();
+						Console.WriteLine("{");
+						Console.WriteLine("\t\"success\": true");
+						Console.WriteLine("}");
+					} else {
+						string destinationIp;
+						string sourceIp;
+						int destinationPort;
+						device.GetEndPoints(0, out sourceIp, out destinationIp, out destinationPort);
+						var address = IPAddress.Parse(destinationIp);
+						ISystemInfo systemInfo = device.GetSystemInfo();
 
-                        Version version = new Version(systemInfo.OSMajor, systemInfo.OSMinor, systemInfo.OSBuildNo);
-                        Console.WriteLine("{");
-                        Console.WriteLine("\t\"success\": true,");
-                        Console.WriteLine("\t\"ip\": \"" + address.ToString() + "\",");
-                        Console.WriteLine("\t\"port\": " + destinationPort.ToString() + ",");
-                        Console.WriteLine("\t\"osVersion\": \"" + version.ToString() + "\",");
-                        Console.WriteLine("\t\"availablePhysical\": " + systemInfo.AvailPhys.ToString() + ",");
-                        Console.WriteLine("\t\"totalPhysical\": " + systemInfo.TotalPhys.ToString() + ",");
-                        Console.WriteLine("\t\"availableVirtual\": " + systemInfo.AvailVirtual.ToString() + ",");
-                        Console.WriteLine("\t\"totalVirtual\": " + systemInfo.TotalVirtual.ToString() + ",");
-                        Console.WriteLine("\t\"architecture\": \"" + systemInfo.ProcessorArchitecture.ToString() + "\",");
-                        Console.WriteLine("\t\"instructionSet\": \"" + systemInfo.InstructionSet.ToString() + "\",");
-                        Console.WriteLine("\t\"processorCount\": " + systemInfo.NumberOfProcessors.ToString() + "");
-                        Console.WriteLine("}");
-                    }
-                    return 0;
+						Version version = new Version(systemInfo.OSMajor, systemInfo.OSMinor, systemInfo.OSBuildNo);
+						Console.WriteLine("{");
+						Console.WriteLine("\t\"success\": true,");
+						Console.WriteLine("\t\"ip\": \"" + address.ToString() + "\",");
+						Console.WriteLine("\t\"port\": " + destinationPort.ToString() + ",");
+						Console.WriteLine("\t\"osVersion\": \"" + version.ToString() + "\",");
+						Console.WriteLine("\t\"availablePhysical\": " + systemInfo.AvailPhys.ToString() + ",");
+						Console.WriteLine("\t\"totalPhysical\": " + systemInfo.TotalPhys.ToString() + ",");
+						Console.WriteLine("\t\"availableVirtual\": " + systemInfo.AvailVirtual.ToString() + ",");
+						Console.WriteLine("\t\"totalVirtual\": " + systemInfo.TotalVirtual.ToString() + ",");
+						Console.WriteLine("\t\"architecture\": \"" + systemInfo.ProcessorArchitecture.ToString() + "\",");
+						Console.WriteLine("\t\"instructionSet\": \"" + systemInfo.InstructionSet.ToString() + "\",");
+						Console.WriteLine("\t\"processorCount\": " + systemInfo.NumberOfProcessors.ToString() + "");
+						Console.WriteLine("}");
+					}
+					return 0;
 				} catch (Exception ex) {
 					Console.WriteLine("{");
 					Console.WriteLine("\t\"success\": false,");
@@ -219,8 +219,8 @@ namespace wptool
 			Console.WriteLine("Commands:");
 			Console.WriteLine("  enumerate                     List all devices and emulators");
 			Console.WriteLine("  connect <udid>                Connects to the specified device");
-            Console.WriteLine("  launch <udid> <product-guid>  Connects to the specified device and launches the app with the given product guid");
-            Console.WriteLine("");
+			Console.WriteLine("  launch <udid> <product-guid>  Connects to the specified device and launches the app with the given product guid");
+			Console.WriteLine("");
 			Console.WriteLine("Options:");
 			Console.WriteLine(" --wpsdk <ver>                  The version of the Windows Phone SDK emulators to use (e.g. '10.0', or '8.1')");
 			Console.WriteLine("                                Defaults to Windows 10 Mobile (e.g. 10.0)");
