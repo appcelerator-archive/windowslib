@@ -28,6 +28,8 @@ describe('winstore', function () {
 		windowslib.winstore.launch(appid, opts, done);
 	});
 
+	// TODO Add tests for getAppxPackages, launch, install, uninstall
+
 	(process.platform === 'win32' ? it : it.skip)('detect should find Windows Store SDK installations', function (done) {
 		this.timeout(5000);
 		this.slow(2000);
