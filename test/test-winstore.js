@@ -28,7 +28,41 @@ describe('winstore', function () {
 		windowslib.winstore.launch(appid, opts, done);
 	});
 
-	// TODO Add tests for getAppxPackages, launch, install, uninstall
+	// TODO Add tests for launch, install, uninstall, loopbackExempt
+
+	(process.platform === 'win32' ? it : it.skip)('getAppxPackages should have preset Windows packages', function (done) {
+		this.timeout(2000);
+		this.slow(1250);
+
+		windowslib.winstore.getAppxPackages({}, function (err, packages) {
+			if (err) {
+				return done(err);
+			}
+
+			should(packages).be.an.Object;
+			// Assume user didn't somehow remove Edge browser and alarms apps
+			should(packages).have.properties('Microsoft.MicrosoftEdge', 'Microsoft.WindowsAlarms');
+
+			// all apps should have same base set of keys
+			Object.keys(packages).forEach(function (appid) {
+				should(packages[appid]).have.properties('Name',
+					'Publisher', 'Architecture', 'Version',
+					'PackageFullName', 'InstallLocation', 'IsFramework',
+					'PackageFamilyName', 'PublisherId', 'IsResourcePackage',
+					'IsBundle', 'IsDevelopmentMode');
+			});
+
+			// sanity check some values for Edge Browser app
+			should(packages['Microsoft.MicrosoftEdge'].Publisher).equal('CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US');
+			should(packages['Microsoft.MicrosoftEdge'].Name).equal('Microsoft.MicrosoftEdge');
+
+			// sanity check some values for Alarms app
+			should(packages['Microsoft.WindowsAlarms'].Publisher).equal('CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US');
+			should(packages['Microsoft.WindowsAlarms'].Name).equal('Microsoft.WindowsAlarms');
+
+			done();
+		});
+	});
 
 	(process.platform === 'win32' ? it : it.skip)('detect should find Windows Store SDK installations', function (done) {
 		this.timeout(5000);
