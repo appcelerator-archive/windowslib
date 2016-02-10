@@ -45,11 +45,23 @@ describe('winstore', function () {
 
 			// all apps should have same base set of keys
 			Object.keys(packages).forEach(function (appid) {
-				should(packages[appid]).have.properties('Name',
-					'Publisher', 'Architecture', 'Version',
-					'PackageFullName', 'InstallLocation', 'IsFramework',
+				should(packages[appid]).have.properties('Name', 'Publisher',
+					'Architecture', 'Version', 'PackageFullName', 'IsFramework',
 					'PackageFamilyName', 'PublisherId', 'IsResourcePackage',
 					'IsBundle', 'IsDevelopmentMode');
+				// may also have Installocation, ResourceId, Dependencies
+				// check types of values are what we expect
+				should(packages[appid].Name).be.a.String;
+				should(packages[appid].Publisher).be.a.String;
+				should(packages[appid].Architecture).be.a.String;
+				should(packages[appid].Version).be.a.String;
+				should(packages[appid].PackageFullName).be.a.String;
+				should(packages[appid].IsFramework).be.a.Boolean;
+				should(packages[appid].PackageFamilyName).be.a.String;
+				should(packages[appid].PublisherId).be.a.String;
+				should(packages[appid].IsResourcePackage).be.a.Boolean;
+				should(packages[appid].IsBundle).be.a.Boolean;
+				should(packages[appid].IsDevelopmentMode).be.a.Boolean;
 			});
 
 			// sanity check some values for Edge Browser app
@@ -59,6 +71,9 @@ describe('winstore', function () {
 			// sanity check some values for Alarms app
 			should(packages['Microsoft.WindowsAlarms'].Publisher).equal('CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US');
 			should(packages['Microsoft.WindowsAlarms'].Name).equal('Microsoft.WindowsAlarms');
+
+			// check multiline value
+			should(packages['Microsoft.Windows.Photos'].Dependencies).equal('{Microsoft.VCLibs.140.00_14.0.22929.0_x64__8wekyb3d8bbwe,Microsoft.NET.Native.Runtime.1.1_1.1.23406.0_x64__8wekyb3d8bbwe,Microsoft.Windows.Photos_16.201.11370.0_neutral_split.scale-100_8wekyb3d8bbwe,Microsoft.Windows.Photos_16.201.11370.0_neutral_split.scale-150_8wekyb3d8bbwe}');
 
 			done();
 		});
