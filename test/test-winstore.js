@@ -31,7 +31,7 @@ describe('winstore', function () {
 	// TODO Add tests for launch, install, uninstall, loopbackExempt
 
 	(process.platform === 'win32' ? it : it.skip)('getAppxPackages should have preset Windows packages', function (done) {
-		this.timeout(2000);
+		this.timeout(10000);
 		this.slow(1250);
 
 		windowslib.winstore.getAppxPackages({}, function (err, packages) {
@@ -72,8 +72,13 @@ describe('winstore', function () {
 			should(packages['Microsoft.WindowsAlarms'].Publisher).equal('CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US');
 			should(packages['Microsoft.WindowsAlarms'].Name).equal('Microsoft.WindowsAlarms');
 
-			// check multiline value
-			should(packages['Microsoft.Windows.Photos'].Dependencies).equal('{Microsoft.VCLibs.140.00_14.0.22929.0_x64__8wekyb3d8bbwe,Microsoft.NET.Native.Runtime.1.1_1.1.23406.0_x64__8wekyb3d8bbwe,Microsoft.Windows.Photos_16.201.11370.0_neutral_split.scale-100_8wekyb3d8bbwe,Microsoft.Windows.Photos_16.201.11370.0_neutral_split.scale-150_8wekyb3d8bbwe}');
+			// check multiline value, can't guarantee ordering of depencencies and sometimes ends with ...
+			// So we check starta nd ends with curly braces and contains specific depencencies we know
+			should(packages['Microsoft.Windows.Photos'].Dependencies).startWith('{').and.endWith('}');
+			should(packages['Microsoft.Windows.Photos'].Dependencies).containEql('Microsoft.VCLibs.140.00_14.0.22929.0_x64__8wekyb3d8bbwe');
+			should(packages['Microsoft.Windows.Photos'].Dependencies).containEql('Microsoft.NET.Native.Runtime.1.1_1.1.23406.0_x64__8wekyb3d8bbwe');
+			should(packages['Microsoft.Windows.Photos'].Dependencies).containEql('Microsoft.Windows.Photos_16.201.11370.0_neutral_split.scale-100_8wekyb3d8bbwe');
+			should(packages['Microsoft.Windows.Photos'].Dependencies).containEql('Microsoft.Windows.Photos_16.201.11370.0_neutral_split.scale-150_8wekyb3d8bbwe');
 
 			done();
 		});
