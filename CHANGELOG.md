@@ -1,3 +1,7 @@
+0.4.1 (2/17/2016)
+-------------------
+  * When removing windows store package, properly pass along command (was broken on Windows 8.1)
+
 0.4.0 (2/10/2016)
 -------------------
   * Support enumerating devices using Windows 10 WinAppDeployCmd
