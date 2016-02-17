@@ -1,3 +1,7 @@
+0.4.2 (2/17/2016)
+-------------------
+  * Align dependencies with titanium_mobile
+
 0.4.1 (2/17/2016)
 -------------------
   * When removing windows store package, properly pass along command (was broken on Windows 8.1)
