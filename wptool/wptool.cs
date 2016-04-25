@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Reflection;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -107,7 +107,7 @@ namespace wptool
 						}
 						Console.WriteLine("\t\t{\n");
 						Console.WriteLine("\t\t\t\"name\": \"" + dev.Name.Replace("\"", "\\\"") + "\",");
-						Console.WriteLine("\t\t\t\"udid\": " + id + ",");
+						Console.WriteLine("\t\t\t\"udid\": \"" + wpsdk.Replace('.', '-') + "-" + id + "\",");
 						Console.WriteLine("\t\t\t\"index\": " + id + ",");
 						Console.WriteLine("\t\t\t\"version\": \"" + versionString + "\","); // windows 8.1: "6.3", windows 10: "10.0"
 						Console.WriteLine("\t\t\t\"wpsdk\": " + sdk);
