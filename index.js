@@ -65,7 +65,7 @@ function detect(options, callback) {
 			issues: []
 		};
 
-		async.each([env, visualstudio, windowsphone, assemblies, device, winstore, emulator], function (lib, next) {
+		async.each([env, visualstudio, windowsphone, assemblies, winstore, wptool], function (lib, next) {
 			lib.detect(options, function (err, result) {
 				err || mix(result, results);
 				next(err);
