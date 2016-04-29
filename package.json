@@ -60,6 +60,7 @@
 		"test-winstore": "mocha --require test/init --reporter spec --check-leaks test/test-winstore",
 		"test-wptool": "mocha --require test/init --reporter spec --check-leaks test/test-wptool"
 	},
+	"os": [ "win32" ],
 	"engines": {
 		"node": ">=0.8"
 	}
