@@ -1,6 +1,6 @@
 {
 	"name": "windowslib",
-	"version": "0.4.12",
+	"version": "0.4.13",
 	"description": "Windows Phone Utility Library",
 	"keywords": [
 		"appcelerator",
@@ -49,6 +49,7 @@
 	"scripts": {
 		"test": "mocha --require test/init --reporter spec --check-leaks test/",
 		"test-assemblies": "mocha --require test/init --reporter spec --check-leaks test/test-assemblies",
+		"test-certs": "mocha --require test/init --reporter spec --check-leaks test/test-certs",
 		"test-device": "mocha --require test/init --reporter spec --check-leaks test/test-device",
 		"test-emulator": "mocha --require test/init --reporter spec --check-leaks test/test-emulator",
 		"test-env": "mocha --require test/init --reporter spec --check-leaks test/test-env",
