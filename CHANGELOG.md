@@ -1,3 +1,7 @@
+0.4.14 (6/24/2016)
+-------------------
+  * [TIMOB-23484] wptool.detect() ignore errors when results are present
+
 0.4.13 (4/29/2016)
 -------------------
   * Fix [TIMOB-20376] Windows Phone: Cannot read property 'split' of undefined
