@@ -1,3 +1,7 @@
+0.4.15 (7/13/2016)
+-------------------
+  * [TIMOB-23279] Only report detected device 
+
 0.4.14 (6/24/2016)
 -------------------
   * [TIMOB-23484] wptool.detect() ignore errors when results are present
