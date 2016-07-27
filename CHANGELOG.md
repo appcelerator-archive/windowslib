@@ -1,3 +1,7 @@
+0.4.16 (7/19/2016)
+-------------------
+  * [TIMOB-23371] Remove placeholder device when only detecting emulators
+
 0.4.15 (7/13/2016)
 -------------------
   * [TIMOB-23279] Only report detected device 
