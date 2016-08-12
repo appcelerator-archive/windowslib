@@ -1,3 +1,7 @@
+0.4.17 (8/12/2016)
+-------------------
+  * [TIMOB-23768] Detect installed Win10 SDK versions
+
 0.4.16 (8/9/2016)
 -------------------
   * [TIMOB-23748] Fix: Failed to connect to WP 8.1 device
