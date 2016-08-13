@@ -1,3 +1,7 @@
+0.4.18 (8/12/2016)
+-------------------
+  * [TIMOB-23762] Handle duplicate package error from Windows SDK 10.0.14393
+
 0.4.17 (8/12/2016)
 -------------------
   * [TIMOB-23768] Detect installed Win10 SDK versions
