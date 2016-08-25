@@ -1,3 +1,7 @@
+0.4.19 (8/23/2016)
+-------------------
+  * [TIMOB-23800] CLI hangs on install of app when a different app is installed
+
 0.4.18 (8/12/2016)
 -------------------
   * [TIMOB-23762] Handle duplicate package error from Windows SDK 10.0.14393
