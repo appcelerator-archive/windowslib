@@ -1,3 +1,7 @@
+0.4.24 (11/10/2016)
+-------------------
+  * [TIMOB-23976] enumerate should just move on even when no results with given version
+
 0.4.23 (9/16/2016)
 -------------------
   * [TIMOB-23879] Terminate running app at launch
