@@ -1,67 +1,81 @@
 {
-	"name": "windowslib",
-	"version": "0.4.23",
-	"description": "Windows Phone Utility Library",
-	"keywords": [
-		"appcelerator",
-		"windows",
-		"windows phone",
-		"winstore",
-		"windows store",
-		"visualstudio",
-		"visual studio",
-		"microsoft"
-	],
-	"author": {
-		"name": "Appcelerator, Inc.",
-		"email": "npmjs@appcelerator.com"
-	},
-	"maintainers": [
-		{"name": "Chris Barber", "email": "cbarber@appcelerator.com"},
-		{"name": "Chris Williams", "email": "cwilliams@appcelerator.com"},
-		{"name": "Dawson Toth", "email": "dtoth@appcelerator.com"},
-		{"name": "Kota Iguchi", "email": "kiguchi@appcelerator.com"}
-	],
-	"repository": {
-		"type": "git",
-		"url": "git://github.com/appcelerator/windowslib.git"
-	},
-	"license": "Apache Public License v2",
-	"main": "./index",
-	"bugs": {
-		"url": "https://github.com/appcelerator/windowslib/issues"
-	},
-	"directories": {
-		"lib": "./lib"
-	},
-	"dependencies": {
-		"async": "1.5.2",
-		"moment": "2.11.2",
-		"node-appc": "~0.2.35",
-		"node-uuid": "1.4.7",
-		"wrench": "1.5.8",
-		"xmldom": "0.1.22"
-	},
-	"devDependencies": {
-		"mocha": "*",
-		"should": "~7.1.1"
-	},
-	"scripts": {
-		"test": "mocha --require test/init --reporter spec --check-leaks test/",
-		"test-assemblies": "mocha --require test/init --reporter spec --check-leaks test/test-assemblies",
-		"test-certs": "mocha --require test/init --reporter spec --check-leaks test/test-certs",
-		"test-device": "mocha --require test/init --reporter spec --check-leaks test/test-device",
-		"test-emulator": "mocha --require test/init --reporter spec --check-leaks test/test-emulator",
-		"test-env": "mocha --require test/init --reporter spec --check-leaks test/test-env",
-		"test-logrelay": "mocha --require test/init --reporter spec --check-leaks test/test-logrelay",
-		"test-process": "mocha --require test/init --reporter spec --check-leaks test/test-process",
-		"test-visualstudio": "mocha --require test/init --reporter spec --check-leaks test/test-visualstudio",
-		"test-windowsphone": "mocha --require test/init --reporter spec --check-leaks test/test-windowsphone",
-		"test-winstore": "mocha --require test/init --reporter spec --check-leaks test/test-winstore",
-		"test-wptool": "mocha --require test/init --reporter spec --check-leaks test/test-wptool"
-	},
-	"os": [ "win32" ],
-	"engines": {
-		"node": ">=0.8"
-	}
+  "name": "windowslib",
+  "version": "0.4.23",
+  "description": "Windows Phone Utility Library",
+  "keywords": [
+    "appcelerator",
+    "windows",
+    "windows phone",
+    "winstore",
+    "windows store",
+    "visualstudio",
+    "visual studio",
+    "microsoft"
+  ],
+  "author": {
+    "name": "Appcelerator, Inc.",
+    "email": "npmjs@appcelerator.com"
+  },
+  "maintainers": [
+    {
+      "name": "Chris Barber",
+      "email": "cbarber@appcelerator.com"
+    },
+    {
+      "name": "Chris Williams",
+      "email": "cwilliams@appcelerator.com"
+    },
+    {
+      "name": "Dawson Toth",
+      "email": "dtoth@appcelerator.com"
+    },
+    {
+      "name": "Kota Iguchi",
+      "email": "kiguchi@appcelerator.com"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/appcelerator/windowslib.git"
+  },
+  "license": "Apache Public License v2",
+  "main": "./index",
+  "bugs": {
+    "url": "https://github.com/appcelerator/windowslib/issues"
+  },
+  "directories": {
+    "lib": "./lib"
+  },
+  "dependencies": {
+    "async": "1.5.2",
+    "moment": "2.11.2",
+    "node-appc": "~0.2.35",
+    "uuid": "^3.0.0",
+    "wrench": "1.5.8",
+    "xmldom": "0.1.22"
+  },
+  "devDependencies": {
+    "mocha": "*",
+    "should": "~7.1.1"
+  },
+  "scripts": {
+    "test": "mocha --require test/init --reporter spec --check-leaks test/",
+    "test-assemblies": "mocha --require test/init --reporter spec --check-leaks test/test-assemblies",
+    "test-certs": "mocha --require test/init --reporter spec --check-leaks test/test-certs",
+    "test-device": "mocha --require test/init --reporter spec --check-leaks test/test-device",
+    "test-emulator": "mocha --require test/init --reporter spec --check-leaks test/test-emulator",
+    "test-env": "mocha --require test/init --reporter spec --check-leaks test/test-env",
+    "test-logrelay": "mocha --require test/init --reporter spec --check-leaks test/test-logrelay",
+    "test-process": "mocha --require test/init --reporter spec --check-leaks test/test-process",
+    "test-visualstudio": "mocha --require test/init --reporter spec --check-leaks test/test-visualstudio",
+    "test-windowsphone": "mocha --require test/init --reporter spec --check-leaks test/test-windowsphone",
+    "test-winstore": "mocha --require test/init --reporter spec --check-leaks test/test-winstore",
+    "test-wptool": "mocha --require test/init --reporter spec --check-leaks test/test-wptool"
+  },
+  "os": [
+    "win32"
+  ],
+  "engines": {
+    "node": ">=0.8"
+  }
 }
