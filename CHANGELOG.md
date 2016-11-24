@@ -1,6 +1,10 @@
-0.4.24 (11/10/2016)
+0.4.25 (11/24/2016)
 -------------------
   * [TIMOB-23976] enumerate should just move on even when no results with given version
+
+0.4.24 (11/22/2016)
+-------------------
+  * [TIMOB-24157] Install certificate in new window
 
 0.4.23 (9/16/2016)
 -------------------
