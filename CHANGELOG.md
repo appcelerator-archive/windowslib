@@ -1,3 +1,7 @@
+0.4.26 (12/20/2016)
+-------------------
+  * Use uuid instead of node-uuid
+
 0.4.25 (11/24/2016)
 -------------------
   * [TIMOB-23976] enumerate should just move on even when no results with given version
