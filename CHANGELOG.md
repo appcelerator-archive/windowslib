@@ -1,3 +1,7 @@
+0.4.27 (01/03/2017)
+-------------------
+  * [TIMOB-24183] Failed to install WP 8.1 app
+
 0.4.26 (12/20/2016)
 -------------------
   * Use uuid instead of node-uuid
