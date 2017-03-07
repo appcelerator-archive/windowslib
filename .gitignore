@@ -20,3 +20,4 @@ test/TestApp10.0/Debug
 test/TestApp10.0/Release
 test/TestApp10.0/Generated Files
 .idea
+.vs
