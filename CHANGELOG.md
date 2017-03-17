@@ -1,3 +1,7 @@
+0.4.29 (03/14/2017)
+-------------------
+  * [TIMOB-24189] Use VsDevCmd instead of vcvarsall
+
 0.4.28 (02/27/2017)
 -------------------
   * [TIMOB-24189] Support Visual Studio 2017
