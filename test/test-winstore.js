@@ -73,7 +73,8 @@ describe('winstore', function () {
 			should(packages['Microsoft.WindowsAlarms'].Name).equal('Microsoft.WindowsAlarms');
 
 			// check multiline value, can't guarantee ordering of depencencies and sometimes ends with ...
-			// So we check starta nd ends with curly braces and contains specific depencencies we know
+			// So we check start and ends with curly braces and contains specific depencencies we know
+			console.log(JSON.stringify(packages['Microsoft.Windows.Photos']));
 			should(packages['Microsoft.Windows.Photos'].Dependencies).startWith('{').and.endWith('}');
 			should(packages['Microsoft.Windows.Photos'].Dependencies).containEql('Microsoft.VCLibs.140.00_14.0.22929.0_x64__8wekyb3d8bbwe');
 			should(packages['Microsoft.Windows.Photos'].Dependencies).containEql('Microsoft.NET.Native.Runtime.1.1_1.1.23406.0_x64__8wekyb3d8bbwe');
