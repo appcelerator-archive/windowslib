@@ -1,7 +1,7 @@
 library 'pipeline-library'
 
 timestamps {
-  node('windows && windows-sdk-10 && (vs2013 || vs2015 || vs2017)') {
+  node('windows && windows-sdk-10 && windows-sdk-8.1 && (vs2015 || vs2017)') {
     def packageVersion = ''
     def isPR = false
     stage('Checkout') {
@@ -17,7 +17,9 @@ timestamps {
         timeout(10) {
           stage('Build') {
             sh 'npm install'
-            sh 'npm test'
+            withEnv(['JUNIT_REPORT_PATH=junit_report.xml']) {
+              sh 'npm test'
+            }
             junit 'junit_report.xml'
             fingerprint 'package.json'
             // Don't tag PRs
