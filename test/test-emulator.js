@@ -321,9 +321,7 @@ describe('emulator', function () {
 				},
 
 				function (next) {
-					windowslib.emulator.stop(emuHandle, function () {
-						done();
-					});
+					windowslib.emulator.stop(emuHandle, next);
 				}
 			], function (err) {
 				done(err);
