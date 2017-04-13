@@ -195,7 +195,7 @@ describe('emulator', function () {
 
 			if (!emu) {
 				this.skip();
-				done();
+				return done();
 			}
 
 			var xapFile = APPS[wpsdk],
@@ -207,6 +207,11 @@ describe('emulator', function () {
 						buildConfiguration: 'Debug',
 						project: PROJECTS[wpsdk]
 					}, function (err, result) {
+						// If we fail to build the project, try and spit out full output
+						if (err && err.extendedError) {
+							console.error(err.extendedError.err);
+							console.info(err.extendedError.out);
+						}
 						next(err);
 					});
 				},
@@ -240,9 +245,7 @@ describe('emulator', function () {
 				},
 
 				function (next) {
-					windowslib.emulator.stop(emuHandle, function () {
-						done();
-					});
+					windowslib.emulator.stop(emuHandle, next);
 				}
 			], function (err) {
 				done(err);

@@ -19,6 +19,8 @@ timestamps {
             bat 'npm install'
             // Try to kill any running emulators first?
             bat returnStatus: true, script: 'taskkill /IM xde.exe'
+            // And stop them too!
+            bat returnStatus: true, script: 'powershell -NoLogo -ExecutionPolicy ByPass -Command "& {Stop-VM *}"'
             withEnv(['JUNIT_REPORT_PATH=junit_report.xml']) {
               bat 'npm test'
             }
