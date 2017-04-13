@@ -17,6 +17,8 @@ timestamps {
         timeout(10) {
           stage('Build') {
             sh 'npm install'
+            // Try to kill any running emulators first?
+            bat 'taskkill /IM xde.exe'
             withEnv(['JUNIT_REPORT_PATH=junit_report.xml']) {
               sh 'npm test'
             }
