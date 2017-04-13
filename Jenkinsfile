@@ -21,10 +21,15 @@ timestamps {
             bat returnStatus: true, script: 'taskkill /IM xde.exe'
             // And stop them too!
             bat returnStatus: true, script: 'powershell -NoLogo -ExecutionPolicy ByPass -Command "& {Stop-VM *}"'
-            withEnv(['JUNIT_REPORT_PATH=junit_report.xml']) {
-              bat 'npm test'
+            try {
+              withEnv(['JUNIT_REPORT_PATH=junit_report.xml']) {
+                bat 'npm test'
+              }
+            } catch (e) {
+              throw e
+            } finally {
+              junit 'junit_report.xml'
             }
-            junit 'junit_report.xml'
             fingerprint 'package.json'
             // Don't tag PRs
             if (!isPR) {
