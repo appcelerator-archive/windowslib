@@ -16,11 +16,11 @@ timestamps {
       ansiColor('xterm') {
         timeout(10) {
           stage('Build') {
-            sh 'npm install'
+            bat 'npm install'
             // Try to kill any running emulators first?
-            bat 'taskkill /IM xde.exe'
+            bat returnStatus: true, script: 'taskkill /IM xde.exe'
             withEnv(['JUNIT_REPORT_PATH=junit_report.xml']) {
-              sh 'npm test'
+              bat 'npm test'
             }
             junit 'junit_report.xml'
             fingerprint 'package.json'
@@ -33,19 +33,19 @@ timestamps {
 
         stage('Security') {
           // Clean up and install only production dependencies
-          sh 'rm -rf node_modules/'
-          sh 'npm install --production'
+          bat 'rm -rf node_modules/'
+          bat 'npm install --production'
 
           // Scan for NSP and RetireJS warnings
-          sh 'npm install nsp'
-          sh 'node ./node_modules/.bin/nsp check --output summary --warn-only'
-          sh 'npm uninstall nsp'
-          sh 'npm prune'
+          bat 'npm install nsp'
+          bat 'node ./node_modules/.bin/nsp check --output summary --warn-only'
+          bat 'npm uninstall nsp'
+          bat 'npm prune'
 
-          sh 'npm install retire'
-          sh 'node ./node_modules/.bin/retire --exitwith 0'
-          sh 'npm uninstall retire'
-          sh 'npm prune'
+          bat 'npm install retire'
+          bat 'node ./node_modules/.bin/retire --exitwith 0'
+          bat 'npm uninstall retire'
+          bat 'npm prune'
 
           step([$class: 'WarningsPublisher', canComputeNew: false, canResolveRelativePaths: false, consoleParsers: [[parserName: 'Node Security Project Vulnerabilities'], [parserName: 'RetireJS']], defaultEncoding: '', excludePattern: '', healthy: '', includePattern: '', messagesPattern: '', unHealthy: ''])
         } // stage
