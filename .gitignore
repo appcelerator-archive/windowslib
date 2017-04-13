@@ -21,3 +21,4 @@ test/TestApp10.0/Release
 test/TestApp10.0/Generated Files
 .idea
 .vs
+junit_report.xml
