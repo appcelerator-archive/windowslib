@@ -16,14 +16,18 @@ timestamps {
       ansiColor('xterm') {
         timeout(10) {
           stage('Build') {
-            bat 'npm install'
+            // Install yarn if not installed
+            if (bat(returnStatus: true, script: 'where yarn') != 0) {
+              bat 'npm install -g yarn'
+            }
+            bat 'yarn install'
             // Try to kill any running emulators first?
             bat returnStatus: true, script: 'taskkill /IM xde.exe'
             // And stop them too!
             bat returnStatus: true, script: 'powershell -NoLogo -ExecutionPolicy ByPass -Command "& {Stop-VM *}"'
             try {
               withEnv(['JUNIT_REPORT_PATH=junit_report.xml']) {
-                bat 'npm test'
+                bat 'yarn test'
               }
             } catch (e) {
               throw e
@@ -40,19 +44,14 @@ timestamps {
 
         stage('Security') {
           // Clean up and install only production dependencies
-          bat 'rm -rf node_modules/'
-          bat 'npm install --production'
+          bat 'yarn install --production'
 
           // Scan for NSP and RetireJS warnings
-          bat 'npm install nsp'
-          bat 'node ./node_modules/.bin/nsp check --output summary --warn-only'
-          bat 'npm uninstall nsp'
-          bat 'npm prune'
+          bat 'yarn global add nsp'
+          bat 'nsp check --output summary --warn-only'
 
-          bat 'npm install retire'
-          bat 'node ./node_modules/.bin/retire --exitwith 0'
-          bat 'npm uninstall retire'
-          bat 'npm prune'
+          bat 'yarn global add retire'
+          bat 'retire --exitwith 0'
 
           step([$class: 'WarningsPublisher', canComputeNew: false, canResolveRelativePaths: false, consoleParsers: [[parserName: 'Node Security Project Vulnerabilities'], [parserName: 'RetireJS']], defaultEncoding: '', excludePattern: '', healthy: '', includePattern: '', messagesPattern: '', unHealthy: ''])
         } // stage
