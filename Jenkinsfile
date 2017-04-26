@@ -1,3 +1,4 @@
+#! groovy
 library 'pipeline-library'
 
 timestamps {
@@ -21,7 +22,7 @@ timestamps {
 
     nodejs(nodeJSInstallationName: 'node 4.7.3') {
       ansiColor('xterm') {
-        timeout(10) {
+        timeout(15) {
           stage('Build') {
             // Install yarn if not installed
             if (bat(returnStatus: true, script: 'where yarn') != 0) {
@@ -62,6 +63,14 @@ timestamps {
 
           step([$class: 'WarningsPublisher', canComputeNew: false, canResolveRelativePaths: false, consoleParsers: [[parserName: 'Node Security Project Vulnerabilities'], [parserName: 'RetireJS']], defaultEncoding: '', excludePattern: '', healthy: '', includePattern: '', messagesPattern: '', unHealthy: ''])
         } // stage
+
+        // stage('Publish') {
+        //   if (!isPR) {
+        //     bat 'npm publish' // FIXME Need to set up windows nodes to be able to publish to npm!
+        //     // Trigger appc-cli-wrapper job
+        //     build job: 'appc-cli-wrapper', wait: false
+        //   }
+        // } // stage
         // TODO Update JIRA?
       } // ansiColor
     } //nodejs

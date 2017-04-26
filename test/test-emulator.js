@@ -190,7 +190,7 @@ describe('emulator', function () {
 		});
 
 		it('launch emulator, then install app via install, then shutdown emulator', function (done) {
-			this.timeout(120000);
+			this.timeout(180000);
 			this.slow(110000);
 
 			if (!emu) {
@@ -253,7 +253,7 @@ describe('emulator', function () {
 		});
 
 		it('launch emulator, then install app via launch, then shutdown emulator', function (done) {
-			this.timeout(120000);
+			this.timeout(180000);
 			this.slow(110000);
 
 			if (!emu) {
