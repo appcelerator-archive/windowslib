@@ -5,7 +5,14 @@ timestamps {
     def packageVersion = ''
     def isPR = false
     stage('Checkout') {
-      checkout scm
+      // checkout scm
+      // Hack for JENKINS-37658 - see https://support.cloudbees.com/hc/en-us/articles/226122247-How-to-Customize-Checkout-for-Pipeline-Multibranch
+      checkout([
+        $class: 'GitSCM',
+        branches: scm.branches,
+        extensions: scm.extensions + [[$class: 'CleanBeforeCheckout']],
+        userRemoteConfigs: scm.userRemoteConfigs
+      ])
 
       isPR = env.BRANCH_NAME.startsWith('PR-')
       packageVersion = jsonParse(readFile('package.json'))['version']
