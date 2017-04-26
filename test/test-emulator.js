@@ -281,7 +281,6 @@ describe('emulator', function () {
 
 				function (next) {
 					windowslib.emulator.launch(null, { killIfRunning: true, wpsdk: wpsdk }, function (err, _emuHandle) {
-						console.log('Received callback for 1st launch call with no app/emulator udid. error: ' + err);
 						emuHandle = _emuHandle;
 						next(err);
 					});
@@ -301,7 +300,6 @@ describe('emulator', function () {
 
 				function (next) {
 					windowslib.emulator.launch(emuHandle.udid, { appPath: xapFile, killIfRunning: false, wpsdk: wpsdk }, function (err, _emuHandle) {
-						console.log('Received callback for 2nd launch call with app and emulator udid. error: ' + err);
 						next(err);
 					});
 				},
