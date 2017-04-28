@@ -2,7 +2,7 @@
 library 'pipeline-library'
 
 timestamps {
-  node('windows && windows-sdk-10 && windows-sdk-8.1 && (vs2015 || vs2017)') {
+  node('windows && windows-sdk-10 && windows-sdk-8.1 && (vs2015 || vs2017) && npm-publish') {
     def packageVersion = ''
     def isPR = false
     stage('Checkout') {
@@ -64,14 +64,47 @@ timestamps {
           step([$class: 'WarningsPublisher', canComputeNew: false, canResolveRelativePaths: false, consoleParsers: [[parserName: 'Node Security Project Vulnerabilities'], [parserName: 'RetireJS']], defaultEncoding: '', excludePattern: '', healthy: '', includePattern: '', messagesPattern: '', unHealthy: ''])
         } // stage
 
-        // stage('Publish') {
-        //   if (!isPR) {
-        //     bat 'npm publish' // FIXME Need to set up windows nodes to be able to publish to npm!
-        //     // Trigger appc-cli-wrapper job
-        //     build job: 'appc-cli-wrapper', wait: false
-        //   }
-        // } // stage
-        // TODO Update JIRA?
+        stage('Publish') {
+          if (!isPR) {
+            bat 'npm publish'
+            // Trigger appc-cli-wrapper job
+            build job: 'appc-cli-wrapper', wait: false
+          }
+        } // stage
+
+        stage('JIRA') {
+          if (!isPR) {
+            def versionName = "windowslib ${packageVersion}"
+            def projectKey = 'TIMOB'
+            def issueKeys = jiraIssueSelector(issueSelector: [$class: 'DefaultIssueSelector'])
+
+            // Comment on the affected tickets with build info
+            step([
+              $class: 'hudson.plugins.jira.JiraIssueUpdater',
+              issueSelector: [$class: 'hudson.plugins.jira.selector.DefaultIssueSelector'],
+              scm: scm
+            ])
+
+            // Create the version we need if it doesn't exist...
+            step([
+              $class: 'hudson.plugins.jira.JiraVersionCreatorBuilder',
+              jiraVersion: versionName,
+              jiraProjectKey: projectKey
+            ])
+
+            // Should append the new version to the ticket's fixVersion field
+            def fixVersion = [name: versionName]
+            for (i = 0; i < issueKeys.size(); i++) {
+              def result = jiraGetIssue(idOrKey: issueKeys[i])
+              def fixVersions = result.data.fields.fixVersions << fixVersion
+              def testIssue = [fields: [fixVersions: fixVersions]]
+              jiraEditIssue(idOrKey: issueKeys[i], issue: testIssue)
+            }
+
+            // Should release the version
+            step([$class: 'JiraReleaseVersionUpdaterBuilder', jiraProjectKey: projectKey, jiraRelease: versionName])
+          } // if
+        } // stage(JIRA)
       } // ansiColor
     } //nodejs
   } // node

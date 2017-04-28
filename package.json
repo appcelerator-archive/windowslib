@@ -1,6 +1,6 @@
 {
 	"name": "windowslib",
-	"version": "0.4.29",
+	"version": "0.4.30",
 	"description": "Windows Phone Utility Library",
 	"keywords": [
 		"appcelerator",
@@ -61,7 +61,6 @@
 		"test-winstore": "mocha --require test/init --reporter spec --check-leaks test/test-winstore",
 		"test-wptool": "mocha --require test/init --reporter spec --check-leaks test/test-wptool"
 	},
-	"os": [ "win32" ],
 	"engines": {
 		"node": ">=0.8"
 	}

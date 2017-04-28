@@ -1,3 +1,9 @@
+0.4.30 (04/28/2017)
+-------------------
+  * [TIMOB-24422] Windows: Fails to install dependencies for app on Windows 10 Phone Emulator
+  * Remove os win32 restriction on package.json so we can install into titanium_mobile from non-Windows machines using yarn
+  * Avoid possible double-callback call on app install when also launching. If app installs ok but failed to launch, we'd fire two callbacks: one for the successful install and another for the failure. We still emit multiple events, but only fire the callback after launch when being asked to both install and launch.
+
 0.4.29 (03/14/2017)
 -------------------
   * [TIMOB-24189] Use VsDevCmd instead of vcvarsall
@@ -56,7 +62,7 @@
 
 0.4.15 (7/13/2016)
 -------------------
-  * [TIMOB-23279] Only report detected device 
+  * [TIMOB-23279] Only report detected device
 
 0.4.14 (6/24/2016)
 -------------------
