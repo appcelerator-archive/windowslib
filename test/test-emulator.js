@@ -225,7 +225,7 @@ describe('emulator', function () {
 				},
 
 				function (next) {
-					windowslib.emulator.install(emu.udid, xapFile, { killIfRunning: true, wpsdk: wpsdk }, function (err, _emuHandle) {
+					windowslib.emulator.install(emu.udid, xapFile, { killIfRunning: false, wpsdk: wpsdk }, function (err, _emuHandle) {
 						emuHandle = _emuHandle;
 						next(err);
 					});
