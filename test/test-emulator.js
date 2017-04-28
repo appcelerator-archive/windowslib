@@ -126,6 +126,9 @@ describe('emulator', function () {
 
 		// Grab the emulator
 		before(function (done) {
+			this.timeout(8000);
+			this.slow(4000);
+
 			windowslib.emulator.detect(function (err, results) {
 				if (err) {
 					return done(err);
