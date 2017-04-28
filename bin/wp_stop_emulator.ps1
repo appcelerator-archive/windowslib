@@ -20,7 +20,11 @@ $query = "Select * from MSVM_Computersystem where Description like '%Virtual%'" 
 $vm = Get-WmiObject -computername localhost -NameSpace root\Virtualization\v2 -query $query
 
 if ($vm.__CLASS -eq 'Msvm_ComputerSystem') {
-	$foo = Stop-VM -Name $vm.ElementName -TurnOff
+	if ((Get-CimInstance Win32_OperatingSystem).Version -ge  (new-object 'Version' 10,0)) {
+		$foo = Stop-VM -Name $vm.ElementName -TurnOff
+	} else {
+		$foo = $vm.RequestStateChange(3)
+	}
 	echo '{"success": true}'
 } else {
 	echo '{"success": true, "message": "Not found or not running"}'
