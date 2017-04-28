@@ -119,7 +119,7 @@ describe('emulator', function () {
 	});
 });
 
-[WIN_10].forEach(function (wpsdk) {
+[WIN_8, WIN_8_1, WIN_10].forEach(function (wpsdk) {
 	// suite
 	(process.platform === 'win32' ? describe : describe.skip)(wpsdk + ' emulator launching', function () {
 		var emu;
@@ -192,7 +192,7 @@ describe('emulator', function () {
 			});
 		});
 
-		it.only('launch emulator, then install app via install, then shutdown emulator', function (done) {
+		it('launch emulator, then install app via install, then shutdown emulator', function (done) {
 			this.timeout(180000);
 			this.slow(110000);
 
