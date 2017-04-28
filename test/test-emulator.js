@@ -34,7 +34,7 @@ describe('emulator', function () {
 	});
 
 	(process.platform === 'win32' ? it : it.skip)('detect Windows Phone emulators', function (done) {
-		this.timeout(5000);
+		this.timeout(8000);
 		this.slow(4000);
 
 		windowslib.emulator.detect(function (err, results) {
@@ -126,6 +126,9 @@ describe('emulator', function () {
 
 		// Grab the emulator
 		before(function (done) {
+			this.timeout(8000);
+			this.slow(4000);
+
 			windowslib.emulator.detect(function (err, results) {
 				if (err) {
 					return done(err);
@@ -146,11 +149,7 @@ describe('emulator', function () {
 
 			windowslib.emulator.stop({
 				name: emu.name
-			}, function () {
-				// do nothing
-			});
-
-			done();
+			}, done);
 		});
 
 		it('launch and shutdown emulator', function (done) {
@@ -190,12 +189,12 @@ describe('emulator', function () {
 		});
 
 		it('launch emulator, then install app via install, then shutdown emulator', function (done) {
-			this.timeout(120000);
+			this.timeout(180000);
 			this.slow(110000);
 
 			if (!emu) {
 				this.skip();
-				done();
+				return done();
 			}
 
 			var xapFile = APPS[wpsdk],
@@ -207,6 +206,11 @@ describe('emulator', function () {
 						buildConfiguration: 'Debug',
 						project: PROJECTS[wpsdk]
 					}, function (err, result) {
+						// If we fail to build the project, try and spit out full output
+						if (err && err.extendedError) {
+							console.error(err.extendedError.err);
+							console.info(err.extendedError.out);
+						}
 						next(err);
 					});
 				},
@@ -217,7 +221,7 @@ describe('emulator', function () {
 				},
 
 				function (next) {
-					windowslib.emulator.install(emu.udid, xapFile, { killIfRunning: true, wpsdk: wpsdk }, function (err, _emuHandle) {
+					windowslib.emulator.install(emu.udid, xapFile, { killIfRunning: false, wpsdk: wpsdk }, function (err, _emuHandle) {
 						emuHandle = _emuHandle;
 						next(err);
 					});
@@ -240,9 +244,7 @@ describe('emulator', function () {
 				},
 
 				function (next) {
-					windowslib.emulator.stop(emuHandle, function () {
-						done();
-					});
+					windowslib.emulator.stop(emuHandle, next);
 				}
 			], function (err) {
 				done(err);
@@ -250,7 +252,7 @@ describe('emulator', function () {
 		});
 
 		it('launch emulator, then install app via launch, then shutdown emulator', function (done) {
-			this.timeout(120000);
+			this.timeout(180000);
 			this.slow(110000);
 
 			if (!emu) {
@@ -318,9 +320,7 @@ describe('emulator', function () {
 				},
 
 				function (next) {
-					windowslib.emulator.stop(emuHandle, function () {
-						done();
-					});
+					windowslib.emulator.stop(emuHandle, next);
 				}
 			], function (err) {
 				done(err);
