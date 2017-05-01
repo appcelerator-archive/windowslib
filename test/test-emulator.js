@@ -158,7 +158,7 @@ describe('emulator', function () {
 
 			if (!emu) {
 				this.skip();
-				done();
+				return done();
 			}
 
 			windowslib.emulator.isRunning(emu.udid, function (err, running) {
@@ -180,9 +180,7 @@ describe('emulator', function () {
 							return done(new Error('Expected the emulator to be running'));
 						}
 
-						windowslib.emulator.stop(emuHandle, function () {
-							done();
-						});
+						windowslib.emulator.stop(emuHandle, done);
 					});
 				});
 			});
@@ -221,7 +219,7 @@ describe('emulator', function () {
 				},
 
 				function (next) {
-					windowslib.emulator.install(emu.udid, xapFile, { killIfRunning: false, wpsdk: wpsdk }, function (err, _emuHandle) {
+					windowslib.emulator.install(emu.udid, xapFile, { killIfRunning: true, wpsdk: wpsdk }, function (err, _emuHandle) {
 						emuHandle = _emuHandle;
 						next(err);
 					});
@@ -246,9 +244,7 @@ describe('emulator', function () {
 				function (next) {
 					windowslib.emulator.stop(emuHandle, next);
 				}
-			], function (err) {
-				done(err);
-			});
+			], done);
 		});
 
 		it('launch emulator, then install app via launch, then shutdown emulator', function (done) {
@@ -257,7 +253,7 @@ describe('emulator', function () {
 
 			if (!emu) {
 				this.skip();
-				done();
+				return done();
 			}
 
 			var xapFile = APPS[wpsdk],
@@ -322,9 +318,7 @@ describe('emulator', function () {
 				function (next) {
 					windowslib.emulator.stop(emuHandle, next);
 				}
-			], function (err) {
-				done(err);
-			});
+			], done);
 		});
 	}); // end suite
 }); // forEach
