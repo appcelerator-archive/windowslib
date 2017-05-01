@@ -143,13 +143,14 @@ describe('emulator', function () {
 
 		// Shut down the emulator
 		after(function (done) {
+			this.timeout(8000);
+			this.slow(4000);
+
 			if (!emu) {
 				return done();
 			}
 
-			windowslib.emulator.stop({
-				name: emu.name
-			}, done);
+			windowslib.emulator.stop({ name: emu.name }, done);
 		});
 
 		it('launch and shutdown emulator', function (done) {
@@ -264,9 +265,7 @@ describe('emulator', function () {
 					windowslib.visualstudio.build({
 						buildConfiguration: 'Debug',
 						project: PROJECTS[wpsdk]
-					}, function (err, result) {
-						next(err);
-					});
+					}, next);
 				},
 
 				function (next) {
