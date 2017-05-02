@@ -2,7 +2,7 @@
  * Tests windowslib's emulator module.
  *
  * @copyright
- * Copyright (c) 2014-2016 by Appcelerator, Inc. All Rights Reserved.
+ * Copyright (c) 2014-2017 by Appcelerator, Inc. All Rights Reserved.
  *
  * @license
  * Licensed under the terms of the Apache Public License.
@@ -54,6 +54,7 @@ describe('emulator', function () {
 					should(emu).have.ownProperty('udid');
 					should(emu).have.ownProperty('index');
 					should(emu).have.ownProperty('wpsdk');
+					should(emu).have.ownProperty('type');
 
 					should(emu.name).be.a.String;
 					should(emu.name).not.equal('');
@@ -62,6 +63,9 @@ describe('emulator', function () {
 
 					should(emu.wpsdk).be.a.String;
 					should(emu.wpsdk).not.equal('');
+
+					should(emu.type).be.a.String;
+					should(emu.type).equal('emulator');
 				});
 			});
 
@@ -187,7 +191,12 @@ describe('emulator', function () {
 			});
 		});
 
-		it('launch emulator, then install app via install, then shutdown emulator', function (done) {
+		// FIXME: I believe windowslib.emulator.install will fail for Windows 10 emulators.
+		// Specifically, I think that we return from wptool.connect too fast.
+		// We launch the emulator, but don't wait for it to be fully up before attempting to install the app.
+		// We should likely add some check that after we do wptool.connect we wait for the status to change to 'Running' from 'Starting'
+		// Add a specific test for this?
+		it('launch emulator and install app via install (from shut down emulator), then shutdown emulator', function (done) {
 			this.timeout(180000);
 			this.slow(110000);
 
@@ -227,7 +236,79 @@ describe('emulator', function () {
 				},
 
 				function (next) {
-					setTimeout(function () { next(); }, 1000);
+					windowslib.emulator.isRunning(emuHandle.udid, function (err, running) {
+						if (err) {
+							next(err);
+						} else if (!running) {
+							next(new Error('Expected the emulator to be running'));
+						} else {
+							next();
+						}
+					});
+				},
+
+				function (next) {
+					windowslib.emulator.stop(emuHandle, next);
+				}
+			], done);
+		});
+
+		it('launch emulator, then install app via install, then shutdown emulator', function (done) {
+			this.timeout(180000);
+			this.slow(110000);
+
+			if (!emu) {
+				this.skip();
+				return done();
+			}
+
+			var xapFile = APPS[wpsdk],
+				emuHandle;
+
+			async.series([
+				function (next) {
+					windowslib.visualstudio.build({
+						buildConfiguration: 'Debug',
+						project: PROJECTS[wpsdk]
+					}, function (err, result) {
+						// If we fail to build the project, try and spit out full output
+						if (err && err.extendedError) {
+							console.error(err.extendedError.err);
+							console.info(err.extendedError.out);
+						}
+						next(err);
+					});
+				},
+
+				function (next) {
+					should(fs.existsSync(xapFile)).be.ok;
+					next();
+				},
+
+				function (next) {
+					windowslib.emulator.launch(null, { killIfRunning: true, wpsdk: wpsdk }, function (err, _emuHandle) {
+						emuHandle = _emuHandle;
+						next(err);
+					});
+				},
+
+				function (next) {
+					windowslib.emulator.isRunning(emuHandle.udid, function (err, running) {
+						if (err) {
+							next(err);
+						} else if (!running) {
+							next(new Error('Expected the emulator to be running'));
+						} else {
+							next();
+						}
+					});
+				},
+
+				function (next) {
+					windowslib.emulator.install(emuHandle.udid, xapFile, { killIfRunning: false, wpsdk: wpsdk }, function (err, _emuHandle) {
+						emuHandle = _emuHandle;
+						next(err);
+					});
 				},
 
 				function (next) {
@@ -296,10 +377,6 @@ describe('emulator', function () {
 					windowslib.emulator.launch(emuHandle.udid, { appPath: xapFile, killIfRunning: false, wpsdk: wpsdk }, function (err, _emuHandle) {
 						next(err);
 					});
-				},
-
-				function (next) {
-					setTimeout(function () { next(); }, 1000);
 				},
 
 				function (next) {
