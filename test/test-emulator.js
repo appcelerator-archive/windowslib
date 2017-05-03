@@ -135,9 +135,10 @@ describe('emulator', function () {
 
 			windowslib.emulator.detect(function (err, results) {
 				if (err) {
+					console.error(err);
 					return done(err);
 				}
-
+// FIXME Not getting the list of WIndows 10 emulators?
 				if (results.emulators[wpsdk].length > 0) {
 					emu = results.emulators[wpsdk][0];
 				}
