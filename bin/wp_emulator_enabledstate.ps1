@@ -19,7 +19,7 @@ $query = "Select * from MSVM_Computersystem where Description like '%Virtual%' A
 $vm = Get-WmiObject -computername localhost -NameSpace root\Virtualization\v2 -query $query
 
 if ($vm.__CLASS -eq 'Msvm_ComputerSystem') {
-	echo '{"success": true, "state": ' + $vm.EnabledState + ' }'
+	echo "{""success"": true, ""state"": $($vm.EnabledState) }"
 } else {
 	echo '{"success": false, "message": "Not found"}'
 }
