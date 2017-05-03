@@ -113,7 +113,7 @@ namespace wptool
 						Console.WriteLine("\t\t\t\"udid\": " + id + ",");
 						Console.WriteLine("\t\t\t\"index\": " + id + ",");
 						Console.WriteLine("\t\t\t\"version\": \"" + versionString + "\","); // windows 8.1: "6.3", windows 10: "10.0"
-						Console.WriteLine("\t\t\t\"wpsdk\": " + sdk + ","));
+						Console.WriteLine("\t\t\t\"wpsdk\": " + sdk + ",");
 						Console.WriteLine("\t\t\t\"type\": \"device\"");
 						Console.Write("\t\t}");
 						j++;
