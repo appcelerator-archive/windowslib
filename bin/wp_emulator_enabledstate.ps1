@@ -15,11 +15,11 @@ if ($args.count -eq 0) {
 	exit 1
 }
 
-$query = "Select * from MSVM_Computersystem where Description like '%Virtual%'" + " AND ElementName like '" + $args[0] + ".%'"
+$query = "Select * from MSVM_Computersystem where Description like '%Virtual%' AND ElementName like '" + $args[0] + ".%'"
 $vm = Get-WmiObject -computername localhost -NameSpace root\Virtualization\v2 -query $query
 
 if ($vm.__CLASS -eq 'Msvm_ComputerSystem') {
 	echo '{"success": true, "state": ' + $vm.EnabledState + ' }'
 } else {
-	echo '{"success": true, "message": "Not found or not running"}'
+	echo '{"success": false, "message": "Not found"}'
 }
