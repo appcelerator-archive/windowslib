@@ -138,7 +138,7 @@ describe('emulator', function () {
 					console.error(err);
 					return done(err);
 				}
-// FIXME Not getting the list of WIndows 10 emulators?
+
 				if (results.emulators[wpsdk].length > 0) {
 					emu = results.emulators[wpsdk][0];
 				}
