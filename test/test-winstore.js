@@ -75,16 +75,25 @@ describe('winstore', function () {
 			// check multiline value, can't guarantee ordering of depencencies and sometimes ends with ...
 			// So we check start and ends with curly braces and contains specific depencencies we know
 			should(packages['Microsoft.Windows.Photos'].Dependencies).startWith('{').and.endWith('}');
-			if (packages['Microsoft.Windows.Photos'].Version === '17.313.10010.0') {
+
+			var photosVersion = packages['Microsoft.Windows.Photos'].Version;
+			if (photosVersion === '17.425.10010.0') {
+				should(packages['Microsoft.Windows.Photos'].Dependencies).containEql('Microsoft.VCLibs.140.00_14.0.24123.0_x64__8wekyb3d8bbwe');
+				should(packages['Microsoft.Windows.Photos'].Dependencies).containEql('Microsoft.NET.Native.Framework.1.3_1.3.24201.0_x64__8wekyb3d8bbwe');
+				should(packages['Microsoft.Windows.Photos'].Dependencies).containEql('Microsoft.NET.Native.Runtime.1.4_1.4.24201.0_x64__8wekyb3d8bbwe');
+				should(packages['Microsoft.Windows.Photos'].Dependencies).containEql('Microsoft.Windows.Photos_17.425.10010.0_neutral_split.scale-100_8wekyb3d8bbwe');
+			} else if (photosVersion === '17.313.10010.0') {
 				should(packages['Microsoft.Windows.Photos'].Dependencies).containEql('Microsoft.VCLibs.140.00_14.0.24123.0_x64__8wekyb3d8bbwe');
 				should(packages['Microsoft.Windows.Photos'].Dependencies).containEql('Microsoft.NET.Native.Framework.1.3_1.3.24201.0_x64__8wekyb3d8bbwe');
 				should(packages['Microsoft.Windows.Photos'].Dependencies).containEql('Microsoft.NET.Native.Runtime.1.3_1.3.23901.0_x64__8wekyb3d8bbwe');
 				should(packages['Microsoft.Windows.Photos'].Dependencies).containEql('Microsoft.Windows.Photos_17.313.10010.0_neutral_split.scale-100_8wekyb3d8bbwe');
-			} else {
+			} else if (photosVersion === '16.201.11370.0') {
 				should(packages['Microsoft.Windows.Photos'].Dependencies).containEql('Microsoft.VCLibs.140.00_14.0.22929.0_x64__8wekyb3d8bbwe');
 				should(packages['Microsoft.Windows.Photos'].Dependencies).containEql('Microsoft.NET.Native.Runtime.1.1_1.1.23406.0_x64__8wekyb3d8bbwe');
 				should(packages['Microsoft.Windows.Photos'].Dependencies).containEql('Microsoft.Windows.Photos_16.201.11370.0_neutral_split.scale-100_8wekyb3d8bbwe');
 				should(packages['Microsoft.Windows.Photos'].Dependencies).containEql('Microsoft.Windows.Photos_16.201.11370.0_neutral_split.scale-150_8wekyb3d8bbwe');
+			} else {
+				console.log('Unknown Microsoft.Photos app version, not attempting to verify dependency listing!');
 			}
 			done();
 		});
