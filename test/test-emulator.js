@@ -111,16 +111,14 @@ describe('emulator', function () {
 		});
 	});
 
-	(process.platform === 'win32' ? it : it.skip)('should shutdown specified emulator', function (done) {
-		this.timeout(5000);
-		this.slow(4000);
-
-		windowslib.emulator.stop({
-			name: 'Some emulator that does not exist'
-		}, function () {
-			done();
-		});
-	});
+	// (process.platform === 'win32' ? it : it.skip)('should shutdown specified emulator', function (done) {
+	// 	this.timeout(5000);
+	// 	this.slow(4000);
+	//
+	// 	windowslib.emulator.stop({
+	// 		name: 'Some emulator that does not exist'
+	// 	}, done);
+	// });
 });
 
 [WIN_8, WIN_8_1, WIN_10].forEach(function (wpsdk) {
@@ -155,7 +153,7 @@ describe('emulator', function () {
 				return done();
 			}
 
-			windowslib.emulator.stop({ name: emu.name }, done);
+			windowslib.emulator.stop(emu, done);
 		});
 
 		it('launch and shutdown emulator', function (done) {
@@ -197,7 +195,7 @@ describe('emulator', function () {
 		// We launch the emulator, but don't wait for it to be fully up before attempting to install the app.
 		// We should likely add some check that after we do wptool.connect we wait for the status to change to 'Running' from 'Starting'
 		// Add a specific test for this?
-		it('launch emulator and install app via #install (from shut down emulator), then shutdown emulator', function (done) {
+		it('launch emulator and install app via #install (from shut down emulator), skip launching app, then shutdown emulator', function (done) {
 			this.timeout(240000);
 			this.slow(110000);
 
@@ -230,7 +228,7 @@ describe('emulator', function () {
 				},
 
 				function (next) {
-					windowslib.emulator.install(emu.udid, xapFile, { killIfRunning: true, wpsdk: wpsdk }, function (err, _emuHandle) {
+					windowslib.emulator.install(emu.udid, xapFile, { killIfRunning: true, wpsdk: wpsdk, skipLaunch: true }, function (err, _emuHandle) {
 						emuHandle = _emuHandle;
 						next(err);
 					});
@@ -254,7 +252,7 @@ describe('emulator', function () {
 			], done);
 		});
 
-		it('launch emulator, then install app via install, then shutdown emulator', function (done) {
+		it('launch emulator, then install and launch app via #install, then shutdown emulator', function (done) {
 			this.timeout(180000);
 			this.slow(110000);
 
@@ -330,7 +328,7 @@ describe('emulator', function () {
 			], done);
 		});
 
-		it('launch emulator, then install app via launch, then shutdown emulator', function (done) {
+		it('launch emulator, then install and launch app via #launch, then shutdown emulator', function (done) {
 			this.timeout(180000);
 			this.slow(110000);
 
