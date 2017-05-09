@@ -195,7 +195,7 @@ describe('emulator', function () {
 		// We launch the emulator, but don't wait for it to be fully up before attempting to install the app.
 		// We should likely add some check that after we do wptool.connect we wait for the status to change to 'Running' from 'Starting'
 		// Add a specific test for this?
-		it('launch emulator and install app via #install (from shut down emulator), skip launching app, then shutdown emulator', function (done) {
+		it('launch emulator and install app via #install (from shut down emulator), then shutdown emulator', function (done) {
 			this.timeout(240000);
 			this.slow(110000);
 
@@ -228,7 +228,7 @@ describe('emulator', function () {
 				},
 
 				function (next) {
-					windowslib.emulator.install(emu.udid, xapFile, { killIfRunning: true, wpsdk: wpsdk, skipLaunch: true }, function (err, _emuHandle) {
+					windowslib.emulator.install(emu.udid, xapFile, { killIfRunning: true, wpsdk: wpsdk }, function (err, _emuHandle) {
 						emuHandle = _emuHandle;
 						next(err);
 					});
