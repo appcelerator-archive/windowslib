@@ -2,8 +2,7 @@
 library 'pipeline-library'
 
 timestamps {
-  // Tie to Win-Gin10 node fo rnow, otherwise install fails on WinGin02
-  node('windows && windows-sdk-10 && windows-sdk-8.1 && (vs2015 || vs2017) && npm-publish && Win-Gin10') {
+  node('windows && windows-sdk-10 && windows-sdk-8.1 && (vs2015 || vs2017) && npm-publish') {
     def packageVersion = ''
     def isPR = false
     stage('Checkout') {

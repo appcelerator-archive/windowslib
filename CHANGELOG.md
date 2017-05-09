@@ -1,3 +1,11 @@
+0.5.0 (05/9/2017)
+-------------------
+  * Add emulator#status to get numeric status of emulator.
+  * Use status to poll emulator for running state (2) after launching but before installing app
+  * Add type property to object describing emulator or device, with value 'emulator' or 'device'
+  * re-use cached emulator listing inside emulator#isRunning and emulator#launch
+  * Fix winstore unit test to work with various version of Microsoft.Photos app
+
 0.4.30 (04/28/2017)
 -------------------
   * [TIMOB-24422] Windows: Fails to install dependencies for app on Windows 10 Phone Emulator
