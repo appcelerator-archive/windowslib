@@ -1,3 +1,7 @@
+0.5.1 (07/04/2017)
+-------------------
+  * [TIMOB-24922] Fix cert generation on VS2017 - Move to using vsDevCmd instead of vcvarsall
+  * [TIMOB-24668] Update VS2017 detection logic to prevent error with VS2015
 0.5.0 (05/9/2017)
 -------------------
   * Add emulator#status to get numeric status of emulator.
