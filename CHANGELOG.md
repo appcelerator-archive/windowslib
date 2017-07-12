@@ -1,3 +1,5 @@
+0.5.2 (07/12/2017)
+  * [TIMOB-246830] Do not attempt to run winappdeploycmd if it does not exist
 0.5.1 (07/04/2017)
 -------------------
   * [TIMOB-24922] Fix cert generation on VS2017 - Move to using vsDevCmd instead of vcvarsall
