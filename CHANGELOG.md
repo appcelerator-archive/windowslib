@@ -1,3 +1,5 @@
+0.5.3 (08/09/2017)
+  * [TIMOB-24683] Must call the callback with an object like {devices:[], emulator:[]}
 0.5.2 (07/12/2017)
   * [TIMOB-24683] Do not attempt to run winappdeploycmd if it does not exist
   * [TIMOB-24956] Fix issue where temporary AppxManifest would not get written when fetching project guid
