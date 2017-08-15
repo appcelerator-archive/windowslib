@@ -1,3 +1,5 @@
+0.5.4 (08/15/2017)
+  * [TIMOB-24958] Fix detection of SDK specific winappdeploycmd
 0.5.3 (08/09/2017)
   * [TIMOB-24683] Must call the callback with an object like {devices:[], emulator:[]}
 0.5.2 (07/12/2017)
