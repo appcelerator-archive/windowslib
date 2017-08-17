@@ -1,9 +1,9 @@
-language: c#
+language: node_js
 sudo: false
-install:
-- npm install
-script:
-- npm test
+node_js:
+- '4'
+- '6'
+- '8'
 deploy:
   provider: npm
   email: npmjs@appcelerator.com
