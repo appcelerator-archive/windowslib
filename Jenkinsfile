@@ -40,10 +40,6 @@ timestamps {
               junit 'junit_report.xml'
             }
             fingerprint 'package.json'
-            // Don't tag PRs
-            if (isMaster) {
-              pushGitTag(name: packageVersion, message: "See ${env.BUILD_URL} for more information.", force: true)
-            }
           } // stage
         } // timeout
 
@@ -64,18 +60,14 @@ timestamps {
         stage('Publish') {
           if (isMaster) {
             bat 'npm publish'
+            // tag in git if npm publish worked
+            pushGitTag(name: packageVersion, message: "See ${env.BUILD_URL} for more information.", force: true)
             // Trigger appc-cli-wrapper job
             build job: 'appc-cli-wrapper', wait: false
+
+            updateJIRA('TIMOB', "windowslib ${packageVersion}", scm)
           }
         } // stage
-
-        stage('JIRA') {
-          if (isMaster) {
-            updateJIRA('TIMOB', "windowslib ${packageVersion}", scm)
-            // Should release the version
-            step([$class: 'JiraReleaseVersionUpdaterBuilder', jiraProjectKey: projectKey, jiraRelease: versionName])
-          } // if
-        } // stage(JIRA)
       } // ansiColor
     } //nodejs
   } // node
