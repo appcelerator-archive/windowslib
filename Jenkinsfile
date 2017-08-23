@@ -22,7 +22,7 @@ timestamps {
 
     nodejs(nodeJSInstallationName: 'node 4.7.3') {
       ansiColor('xterm') {
-        timeout(15) {
+        timeout(20) {
           stage('Build') {
             bat 'npm install -g npm@5.2.0'
             bat 'npm install'
