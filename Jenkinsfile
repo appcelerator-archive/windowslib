@@ -41,7 +41,7 @@ timestamps {
             }
             fingerprint 'package.json'
             // Don't tag PRs
-            if (!isMaster) {
+            if (isMaster) {
               pushGitTag(name: packageVersion, message: "See ${env.BUILD_URL} for more information.", force: true)
             }
           } // stage
