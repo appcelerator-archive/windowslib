@@ -12,3 +12,4 @@ wstool/bin
 wstool/obj
 test/TestApp/Bin
 test/TestApp/obj
+Jenkinsfile
