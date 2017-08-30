@@ -1,3 +1,6 @@
+0.6.0 (08/30/2017)
+  * [TIMOB-25027] Only detect emulators based off the optional supportedWindowsPhoneSDKVersions parameter
+  * Add coverage gathering
 0.5.5 (09/07/2017)
   * [TIMOB-25232] Make sure to catch JSON.parse errors
 0.5.4 (08/15/2017)
