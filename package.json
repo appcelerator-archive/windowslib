@@ -57,10 +57,11 @@
 	"devDependencies": {
 		"mocha": "*",
 		"mocha-jenkins-reporter": "0.3.7",
+		"nyc": "^11.1.0",
 		"should": "~7.1.1"
 	},
 	"scripts": {
-		"test": "mocha --require test/init --reporter mocha-jenkins-reporter --check-leaks test/",
+		"test": "nyc --reporter=html --reporter=json --reporter=text --reporter=text-summary mocha --require test/init --reporter mocha-jenkins-reporter --check-leaks test/",
 		"test-assemblies": "mocha --require test/init --reporter spec --check-leaks test/test-assemblies",
 		"test-certs": "mocha --require test/init --reporter spec --check-leaks test/test-certs",
 		"test-device": "mocha --require test/init --reporter spec --check-leaks test/test-device",
