@@ -155,6 +155,129 @@ describe('wptool', function () {
 		});
 	});
 
+	(process.platform === 'win32' ? it : it.skip)('should enumerate only 8.1 Windows Phone devices and emulators when supportedWindowsPhoneSDKVersions is 8.1', function (done) {
+		this.timeout(5000);
+		this.slow(4000);
+
+		windowslib.wptool.enumerate({supportedWindowsPhoneSDKVersions: '8.1', bypassCache: true}, function (err, results) {
+			if (err) {
+				return done(err);
+			}
+
+			should(results).be.an.Object;
+
+			function checkDevices(devs) {
+				should(devs).be.an.Array;
+
+				devs.forEach(function (d) {
+					should(d).be.an.Object;
+					should(d).have.ownProperty('name');
+					should(d).have.ownProperty('udid');
+					should(d).have.ownProperty('index');
+					should(d).have.ownProperty('wpsdk');
+
+					should(d.name).be.a.String;
+					should(d.name).not.equal('');
+
+					should(d.index).be.an.Integer;
+				});
+			}
+
+			Object.keys(results).forEach(function (wpsdk) {
+				should(wpsdk).not.equal('10.0')
+				should(results[wpsdk]).be.an.Object;
+				should(results[wpsdk]).have.keys('devices', 'emulators');
+
+				checkDevices(results[wpsdk].devices);
+				checkDevices(results[wpsdk].emulators);
+			});
+
+			done();
+		});
+	});
+
+	(process.platform === 'win32' ? it : it.skip)('should enumerate only 10.0 Windows Phone devices and emulators when supportedWindowsPhoneSDKVersions is 10.0', function (done) {
+		this.timeout(5000);
+		this.slow(4000);
+
+		windowslib.wptool.enumerate({supportedWindowsPhoneSDKVersions: '10.0', bypassCache: true}, function (err, results) {
+			if (err) {
+				return done(err);
+			}
+
+			should(results).be.an.Object;
+
+			function checkDevices(devs) {
+				should(devs).be.an.Array;
+
+				devs.forEach(function (d) {
+					should(d).be.an.Object;
+					should(d).have.ownProperty('name');
+					should(d).have.ownProperty('udid');
+					should(d).have.ownProperty('index');
+					should(d).have.ownProperty('wpsdk');
+
+					should(d.name).be.a.String;
+					should(d.name).not.equal('');
+
+					should(d.index).be.an.Integer;
+				});
+			}
+
+			Object.keys(results).forEach(function (wpsdk) {
+				should(wpsdk).not.equal('8.1')
+				should(results[wpsdk]).be.an.Object;
+				should(results[wpsdk]).have.keys('devices', 'emulators');
+
+				checkDevices(results[wpsdk].devices);
+				checkDevices(results[wpsdk].emulators);
+			});
+
+			done();
+		});
+	});
+
+	(process.platform === 'win32' ? it : it.skip)('should enumerate 8.1 and 10.0 Windows Phone devices and emulators when supportedWindowsPhoneSDKVersions is 8.1 and 10.0', function (done) {
+		this.timeout(5000);
+		this.slow(4000);
+
+		windowslib.wptool.enumerate({supportedWindowsPhoneSDKVersions: '8.1 || 10.0', bypassCache: true}, function (err, results) {
+			if (err) {
+				return done(err);
+			}
+
+			should(results).be.an.Object;
+
+			function checkDevices(devs) {
+				should(devs).be.an.Array;
+
+				devs.forEach(function (d) {
+					should(d).be.an.Object;
+					should(d).have.ownProperty('name');
+					should(d).have.ownProperty('udid');
+					should(d).have.ownProperty('index');
+					should(d).have.ownProperty('wpsdk');
+
+					should(d.name).be.a.String;
+					should(d.name).not.equal('');
+
+					should(d.index).be.an.Integer;
+				});
+			}
+			should(results['8.1']).be.an.Object;
+			should(results['10.0']).be.an.Object;
+			Object.keys(results).forEach(function (wpsdk) {
+				should(results[wpsdk]).be.an.Object;
+				should(results[wpsdk]).have.keys('devices', 'emulators');
+
+				checkDevices(results[wpsdk].devices);
+				checkDevices(results[wpsdk].emulators);
+			});
+
+			done();
+		});
+	});
+
 	it('should not connect to a device with a bad udid', function (done) {
 		this.timeout(5000);
 		this.slow(4000);
