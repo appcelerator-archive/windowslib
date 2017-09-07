@@ -1,3 +1,5 @@
+0.5.5 (09/07/2017)
+  * [TIMOB-25232] Make sure to catch JSON.parse errors
 0.5.4 (08/15/2017)
   * [TIMOB-24958] Fix detection of SDK specific winappdeploycmd
 0.5.3 (08/09/2017)
