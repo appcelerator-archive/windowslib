@@ -22,3 +22,5 @@ test/TestApp10.0/Generated Files
 .idea
 .vs
 junit_report.xml
+.nyc_output
+/coverage

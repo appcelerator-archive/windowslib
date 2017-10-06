@@ -13,3 +13,5 @@ wstool/obj
 test/TestApp/Bin
 test/TestApp/obj
 Jenkinsfile
+.nyc_output
+/coverage
