@@ -1,3 +1,5 @@
+0.6.1 (21/11/2017)
+  * [DAEMON-165] Handle max path when building wptool
 0.6.0 (08/30/2017)
   * [TIMOB-25027] Only detect emulators based off the optional supportedWindowsPhoneSDKVersions parameter
   * Add coverage gathering
