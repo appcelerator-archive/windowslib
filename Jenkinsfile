@@ -48,7 +48,7 @@ timestamps {
           bat 'npm prune --production'
 
           // Scan for NSP and RetireJS warnings
-          bat 'npm install --global nsp'
+          bat 'npm install --global nsp@2.8.1'
           bat 'nsp check --output summary --warn-only'
 
           bat 'npm install --global retire'
