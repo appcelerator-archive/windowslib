@@ -19,6 +19,9 @@ test/TestApp10.0/AppPackages
 test/TestApp10.0/Debug
 test/TestApp10.0/Release
 test/TestApp10.0/Generated Files
+test/Name With Space/bin
+test/Name With Space/.vs
+test/Name With Space/obj
 .idea
 .vs
 junit_report.xml

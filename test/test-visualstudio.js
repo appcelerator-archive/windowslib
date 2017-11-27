@@ -11,6 +11,7 @@
 
 const
 	fs = require('fs'),
+	path = require('path'),
 	windowslib = require('..');
 
 describe('visualstudio', function () {
@@ -50,6 +51,23 @@ describe('visualstudio', function () {
 				should(issue.message).be.a.String;
 			});
 
+			done();
+		});
+	});
+
+	(process.platform === 'win32' ? it : it.skip)('should build with spaces in name', function (done) {
+		this.timeout(15000);
+		this.slow(2000);
+		var opts = {
+			buildConfiguration: 'Release',
+			project: path.join(__dirname, 'Name With Space', 'Name With Space.csproj')
+		};
+		windowslib.visualstudio.build(opts, function (err, result) {
+			if (err) {
+				return done(err);
+			}
+			should(result.code).equal(0);
+			should(fs.existsSync(path.join(__dirname, 'Name With Space', 'bin', 'Release', 'Name With Space.exe'))).equal(true);
 			done();
 		});
 	});
