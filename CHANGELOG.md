@@ -1,3 +1,5 @@
+0.6.2 (27/11/2017)
+  * [DAEMON-184] Wrap project name in quotes when building a projecy
 0.6.1 (21/11/2017)
   * [DAEMON-165] Handle max path when building wptool
 0.6.0 (08/30/2017)
