@@ -12,7 +12,8 @@
 const
 	fs = require('fs'),
 	path = require('path'),
-	windowslib = require('..');
+	windowslib = require('..'),
+	wrench = require('wrench');
 
 describe('visualstudio', function () {
 	it('namespace should be an object', function () {
@@ -68,6 +69,7 @@ describe('visualstudio', function () {
 			}
 			should(result.code).equal(0);
 			should(fs.existsSync(path.join(__dirname, 'Name With Space', 'bin', 'Release', 'Name With Space.exe'))).equal(true);
+			wrench.rmdirSyncRecursive(path.join(__dirname, 'Name With Space', 'bin'));
 			done();
 		});
 	});
