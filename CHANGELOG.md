@@ -1,4 +1,4 @@
-0.6.3 (19/12/2017)
+0.6.4 (19/12/2017)
   * [TIMOB-25616] Don't forceUnInstall unless user explicitly specifies it
 0.6.3 (27/11/2017)
   * [DAEMON-184] Remove unnecessary quote when building project
