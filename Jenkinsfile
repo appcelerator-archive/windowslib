@@ -58,8 +58,6 @@ timestamps {
             bat 'npm publish'
             // tag in git if npm publish worked
             pushGitTag(name: packageVersion, message: "See ${env.BUILD_URL} for more information.", force: true)
-            // Trigger appc-cli-wrapper job
-            build job: 'appc-cli-wrapper', wait: false
 
             updateJIRA('TIMOB', "windowslib ${packageVersion}", scm)
           }
