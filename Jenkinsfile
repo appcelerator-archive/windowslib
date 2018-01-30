@@ -1,6 +1,9 @@
 #! groovy
 library 'pipeline-library'
 
+def nodeVersion = '8.9.1' // changing requires setting version up on Jenkisn first, ask Chris or Alan to help
+def npmVersion = '5.6.0' // change be changed by devs
+
 timestamps {
   node('windows && windows-sdk-10 && windows-sdk-8.1 && (vs2015 || vs2017) && npm-publish') {
     def packageVersion = ''
@@ -20,25 +23,20 @@ timestamps {
       currentBuild.displayName = "#${packageVersion}-${currentBuild.number}"
     }
 
-    nodejs(nodeJSInstallationName: 'node 4.7.3') {
+    nodejs(nodeJSInstallationName: "node ${nodeVersion}") {
       ansiColor('xterm') {
         timeout(20) {
           stage('Build') {
-            bat 'npm install -g npm@5.2.0'
+            bat "npm install -g npm@${npmVersion}"
             bat 'npm install'
             // Try to kill any running emulators first?
             bat returnStatus: true, script: 'taskkill /IM xde.exe'
             // And stop them too!
             bat returnStatus: true, script: 'powershell -NoLogo -ExecutionPolicy ByPass -Command "& {Stop-VM *}"'
-            try {
-              withEnv(['JUNIT_REPORT_PATH=junit_report.xml']) {
-                bat 'npm test'
-              }
-            } catch (e) {
-              throw e
-            } finally {
-              junit 'junit_report.xml'
+            withEnv(['JUNIT_REPORT_PATH=junit_report.xml']) {
+              bat returnStatus: true, script: 'npm test' // ignore bad exit code if tests fail, don't fail build
             }
+            junit 'junit_report.xml'
             fingerprint 'package.json'
           } // stage
         } // timeout
