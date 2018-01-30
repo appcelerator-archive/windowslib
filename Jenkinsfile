@@ -2,7 +2,6 @@
 library 'pipeline-library'
 
 def nodeVersion = '8.9.1' // changing requires setting version up on Jenkisn first, ask Chris or Alan to help
-def npmVersion = '5.6.0' // change be changed by devs
 
 timestamps {
   node('windows && windows-sdk-10 && windows-sdk-8.1 && (vs2015 || vs2017) && npm-publish') {
@@ -27,7 +26,6 @@ timestamps {
       ansiColor('xterm') {
         timeout(20) {
           stage('Build') {
-            bat "npm install -g npm@${npmVersion}"
             bat 'npm install'
             // Try to kill any running emulators first?
             bat returnStatus: true, script: 'taskkill /IM xde.exe'
