@@ -1,3 +1,5 @@
+0.6.5 (02/03/2018)
+  * [TIMOB-25827] Fix error when fresh install with forceUnInstall 
 0.6.4 (19/12/2017)
   * [TIMOB-25616] Don't forceUnInstall unless user explicitly specifies it
 0.6.3 (27/11/2017)
