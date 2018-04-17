@@ -48,7 +48,7 @@
 	},
 	"dependencies": {
 		"async": "1.5.2",
-		"moment": "2.11.2",
+		"moment": "2.19.3",
 		"node-appc": "~0.2.35",
 		"uuid": "3.0.0",
 		"wrench": "1.5.8",
