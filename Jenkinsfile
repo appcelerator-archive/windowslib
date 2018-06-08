@@ -1,7 +1,8 @@
 #! groovy
 library 'pipeline-library'
 
-def nodeVersion = '8.9.1' // changing requires setting version up on Jenkisn first, ask Chris or Alan to help
+def nodeVersion = '8.9.1' // changing requires setting version up on Jenkins first, ask Chris or Alan to help
+def npmVersion = '6.1.0'
 
 timestamps {
   node('windows && windows-sdk-10 && windows-sdk-8.1 && (vs2015 || vs2017) && npm-publish') {
@@ -26,7 +27,8 @@ timestamps {
       ansiColor('xterm') {
         timeout(20) {
           stage('Build') {
-            bat 'npm install'
+            ensureNPM(npmVersion)
+            bat 'npm ci'
             // Try to kill any running emulators first?
             bat returnStatus: true, script: 'taskkill /IM xde.exe'
             // And stop them too!
@@ -41,14 +43,11 @@ timestamps {
 
         stage('Security') {
           // Clean up and install only production dependencies
-          bat 'npm prune --production'
+          bat 'npm ci --production'
 
           // Scan for NSP and RetireJS warnings
-          bat 'npm install --global nsp@2.8.1'
-          bat 'nsp check --output summary --warn-only'
-
-          bat 'npm install --global retire'
-          bat 'retire --exitwith 0'
+          bat 'npx nsp check --output summary --warn-only'
+          bat 'npx retire --exitwith 0'
 
           step([$class: 'WarningsPublisher', canComputeNew: false, canResolveRelativePaths: false, consoleParsers: [[parserName: 'Node Security Project Vulnerabilities'], [parserName: 'RetireJS']], defaultEncoding: '', excludePattern: '', healthy: '', includePattern: '', messagesPattern: '', unHealthy: ''])
         } // stage
