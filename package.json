@@ -1,6 +1,6 @@
 {
 	"name": "windowslib",
-	"version": "0.6.5",
+	"version": "0.6.6",
 	"description": "Windows Phone Utility Library",
 	"keywords": [
 		"appcelerator",
@@ -49,16 +49,16 @@
 	"dependencies": {
 		"async": "1.5.2",
 		"moment": "2.19.3",
-		"node-appc": "^0.2.46",
-		"uuid": "3.0.0",
+		"node-appc": "^0.2.47",
+		"uuid": "^3.2.1",
 		"wrench": "1.5.8",
 		"xmldom": "0.1.22"
 	},
 	"devDependencies": {
 		"mocha": "*",
 		"mocha-jenkins-reporter": "0.3.7",
-		"nyc": "^11.1.0",
-		"should": "~7.1.1"
+		"nyc": "^11.9.0",
+		"should": "^13.2.1"
 	},
 	"scripts": {
 		"test": "nyc --reporter=html --reporter=json --reporter=text --reporter=text-summary mocha --require test/init --reporter mocha-jenkins-reporter --check-leaks test/",
