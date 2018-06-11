@@ -16,6 +16,10 @@ const
 	CERT_FILE = path.join(__dirname, 'Windows_TemporaryKey.pfx');
 
 describe('certs', function () {
+	after(function () {
+		global.asyncDump();
+	});
+
 	it('namespace should be an object', function () {
 		should(windowslib.certs).be.an.Object;
 	});

@@ -14,6 +14,10 @@ const
 	windowslib = require('..');
 
 describe('assemblies', function () {
+	after(function () {
+		global.asyncDump();
+	});
+
 	it('namespace should be an object', function () {
 		should(windowslib.assemblies).be.an.Object;
 	});

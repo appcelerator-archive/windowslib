@@ -14,6 +14,10 @@ const
 	windowslib = require('..');
 
 describe('log relay', function () {
+	after(function () {
+		global.asyncDump();
+	});
+
 	it('namespace should be an object', function () {
 		should(windowslib.LogRelay).be.an.Function;
 	});

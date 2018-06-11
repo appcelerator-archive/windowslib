@@ -29,6 +29,10 @@ const
 	};
 
 describe('emulator', function () {
+	after(function () {
+		global.asyncDump();
+	});
+
 	it('namespace should be an object', function () {
 		should(windowslib.emulator).be.an.Object;
 	});

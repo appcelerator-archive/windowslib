@@ -12,6 +12,10 @@
 const windowslib = require('..');
 
 describe('process', function () {
+	after(function () {
+		global.asyncDump();
+	});
+
 	it('namespace should be an object', function () {
 		should(windowslib.process).be.an.Object;
 	});

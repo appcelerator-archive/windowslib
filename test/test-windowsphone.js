@@ -14,6 +14,10 @@ const
 	windowslib = require('..');
 
 describe('windowsphone', function () {
+	after(function () {
+		global.asyncDump();
+	});
+
 	it('namespace should be an object', function () {
 		should(windowslib.windowsphone).be.an.Object;
 	});
