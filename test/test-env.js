@@ -12,10 +12,6 @@
 const windowslib = require('..');
 
 describe('env', function () {
-	after(function () {
-		global.asyncDump();
-	});
-
 	it('namespace should be an object', function () {
 		should(windowslib.env).be.an.Object;
 	});

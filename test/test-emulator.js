@@ -29,10 +29,6 @@ const
 	};
 
 describe('emulator', function () {
-	after(function () {
-		global.asyncDump();
-	});
-
 	it('namespace should be an object', function () {
 		should(windowslib.emulator).be.an.Object;
 	});
@@ -157,14 +153,7 @@ describe('emulator', function () {
 				return done();
 			}
 
-			console.log('In mocha after callback');
-			global.asyncDump();
-
-			windowslib.emulator.stop(emu, function (err) {
-				console.log('In windowslib.emulator.stop callback');
-				global.asyncDump();
-				done(err);
-			});
+			windowslib.emulator.stop(emu, done);
 		});
 
 		it('launch and shutdown emulator', function (done) {

@@ -15,10 +15,6 @@ const
 	windowslib = require('..');
 
 describe('device', function () {
-	after(function () {
-		global.asyncDump();
-	});
-
 	it('namespace should be an object', function () {
 		should(windowslib.device).be.an.Object;
 	});

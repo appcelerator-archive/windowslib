@@ -14,10 +14,6 @@ const
 	windowslib = require('..');
 
 describe('wptool', function () {
-	after(function () {
-		global.asyncDump();
-	});
-
 	it('namespace should be an object', function () {
 		should(windowslib.wptool).be.an.Object;
 	});
