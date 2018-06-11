@@ -157,7 +157,14 @@ describe('emulator', function () {
 				return done();
 			}
 
-			windowslib.emulator.stop(emu, done);
+			console.log('In mocha after callback');
+			global.asyncDump();
+
+			windowslib.emulator.stop(emu, function (err) {
+				console.log('In windowslib.emulator.stop callback');
+				global.asyncDump();
+				done(err);
+			});
 		});
 
 		it('launch and shutdown emulator', function (done) {
