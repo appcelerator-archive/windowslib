@@ -14,6 +14,7 @@ const
 	windowslib = require('..');
 
 describe('winstore', function () {
+
 	it('namespace should be an object', function () {
 		should(windowslib.winstore).be.an.Object;
 	});
