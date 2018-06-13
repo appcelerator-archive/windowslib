@@ -10,8 +10,11 @@ wptool/bin
 wptool/obj
 wstool/bin
 wstool/obj
-test/TestApp/Bin
-test/TestApp/obj
 Jenkinsfile
 .nyc_output
 /coverage
+.travis.yml
+junit_report.xml
+test/
+CHANGELOG.md
+README.md

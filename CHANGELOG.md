@@ -1,5 +1,9 @@
+0.6.7 (06/13/2018)
+  * Update .npmignore to avoid including test files, other unnecessary files in release
+0.6.6 (06/13/2018)
+  * Update npm dependencies
 0.6.5 (02/03/2018)
-  * [TIMOB-25827] Fix error when fresh install with forceUnInstall 
+  * [TIMOB-25827] Fix error when fresh install with forceUnInstall
 0.6.4 (19/12/2017)
   * [TIMOB-25616] Don't forceUnInstall unless user explicitly specifies it
 0.6.3 (27/11/2017)
