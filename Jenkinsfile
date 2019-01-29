@@ -2,7 +2,7 @@
 library 'pipeline-library'
 
 def nodeVersion = '8.9.1' // changing requires setting version up on Jenkins first, ask Chris or Alan to help
-def npmVersion = '6.1.0'
+def npmVersion = 'latest'
 
 timestamps {
   node('windows && windows-sdk-10 && windows-sdk-8.1 && (vs2015 || vs2017) && npm-publish') {
@@ -45,11 +45,10 @@ timestamps {
           // Clean up and install only production dependencies
           bat 'npm ci --production'
 
-          // Scan for NSP and RetireJS warnings
-          bat 'npx nsp check --output summary --warn-only'
+          // Scan for RetireJS warnings
           bat 'npx retire --exitwith 0'
 
-          step([$class: 'WarningsPublisher', canComputeNew: false, canResolveRelativePaths: false, consoleParsers: [[parserName: 'Node Security Project Vulnerabilities'], [parserName: 'RetireJS']], defaultEncoding: '', excludePattern: '', healthy: '', includePattern: '', messagesPattern: '', unHealthy: ''])
+          step([$class: 'WarningsPublisher', canComputeNew: false, canResolveRelativePaths: false, consoleParsers: [[parserName: 'RetireJS']], defaultEncoding: '', excludePattern: '', healthy: '', includePattern: '', messagesPattern: '', unHealthy: ''])
         } // stage
 
         stage('Publish') {
