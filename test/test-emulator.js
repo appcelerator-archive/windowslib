@@ -34,7 +34,7 @@ describe('emulator', function () {
 	});
 
 	(process.platform === 'win32' ? it : it.skip)('detect Windows Phone emulators', function (done) {
-		this.timeout(8000);
+		this.timeout(60000);
 		this.slow(4000);
 
 		windowslib.emulator.detect(function (err, results) {
@@ -84,7 +84,7 @@ describe('emulator', function () {
 	});
 
 	(process.platform === 'win32' ? it : it.skip)('detect if emulator is running', function (done) {
-		this.timeout(5000);
+		this.timeout(60000);
 		this.slow(4000);
 
 		windowslib.emulator.detect(function (err, results) {
