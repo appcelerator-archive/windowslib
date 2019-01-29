@@ -1,3 +1,5 @@
+0.6.8 (01/29/2018)
+  * [TIMOB-24422] Fix deployment issue with "violates pattern constraint of bms-resource"
 0.6.7 (06/13/2018)
   * Update .npmignore to avoid including test files, other unnecessary files in release
 0.6.6 (06/13/2018)
