@@ -170,7 +170,7 @@ describe('emulator', function () {
 					return done(err);
 				}
 
-				windowslib.emulator.launch(emu.udid, { killIfRunning: true }, function (err, emuHandle) {
+				windowslib.emulator.launch(emu.udid, { forceUnInstall:true, killIfRunning: true }, function (err, emuHandle) {
 					if (err) {
 						return done(err);
 					}
@@ -228,7 +228,7 @@ describe('emulator', function () {
 				},
 
 				function (next) {
-					windowslib.emulator.install(emu.udid, xapFile, { killIfRunning: true, wpsdk: wpsdk }, function (err, _emuHandle) {
+					windowslib.emulator.install(emu.udid, xapFile, { forceUnInstall: true, killIfRunning: true, wpsdk: wpsdk }, function (err, _emuHandle) {
 						emuHandle = _emuHandle;
 						next(err);
 					});
@@ -285,7 +285,7 @@ describe('emulator', function () {
 				},
 
 				function (next) {
-					windowslib.emulator.launch(null, { killIfRunning: true, wpsdk: wpsdk }, function (err, _emuHandle) {
+					windowslib.emulator.launch(null, { forceUnInstall: true, killIfRunning: true, wpsdk: wpsdk }, function (err, _emuHandle) {
 						emuHandle = _emuHandle;
 						next(err);
 					});
@@ -304,7 +304,7 @@ describe('emulator', function () {
 				},
 
 				function (next) {
-					windowslib.emulator.install(emuHandle.udid, xapFile, { killIfRunning: false, wpsdk: wpsdk }, function (err, _emuHandle) {
+					windowslib.emulator.install(emuHandle.udid, xapFile, { forceUnInstall: true, killIfRunning: false, wpsdk: wpsdk }, function (err, _emuHandle) {
 						emuHandle = _emuHandle;
 						next(err);
 					});
@@ -354,7 +354,7 @@ describe('emulator', function () {
 				},
 
 				function (next) {
-					windowslib.emulator.launch(null, { killIfRunning: true, wpsdk: wpsdk }, function (err, _emuHandle) {
+					windowslib.emulator.launch(null, { forceUnInstall: true, killIfRunning: true, wpsdk: wpsdk }, function (err, _emuHandle) {
 						emuHandle = _emuHandle;
 						next(err);
 					});
@@ -373,7 +373,7 @@ describe('emulator', function () {
 				},
 
 				function (next) {
-					windowslib.emulator.launch(emuHandle.udid, { appPath: xapFile, killIfRunning: false, wpsdk: wpsdk }, function (err, _emuHandle) {
+					windowslib.emulator.launch(emuHandle.udid, { appPath: xapFile, forceUnInstall: true, killIfRunning: false, wpsdk: wpsdk }, function (err, _emuHandle) {
 						next(err);
 					});
 				},
