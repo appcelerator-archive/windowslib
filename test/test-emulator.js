@@ -121,7 +121,7 @@ describe('emulator', function () {
 	// });
 });
 
-[WIN_8, WIN_8_1, WIN_10].forEach(function (wpsdk) {
+[WIN_8, WIN_10].forEach(function (wpsdk) {
 	// suite
 	(process.platform === 'win32' ? describe : describe.skip)(wpsdk + ' emulator launching', function () {
 		var emu;
