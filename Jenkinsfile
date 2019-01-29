@@ -25,7 +25,7 @@ timestamps {
 
     nodejs(nodeJSInstallationName: "node ${nodeVersion}") {
       ansiColor('xterm') {
-        timeout(30) {
+        timeout(20) {
           stage('Build') {
             ensureNPM(npmVersion)
             bat 'npm ci'
