@@ -75,6 +75,41 @@ describe('certs', function () {
 		});
 	});
 
+	it('parseCertUtilOutput() does not call callback twice if consumer throws Error', function (done) {
+		var output = "Certificates: Not Encrypted\r\n" +
+			"================ Certificate 0 ================\r\n" +
+			"================ Begin Nesting Level 1 ================\r\n" +
+			"Element 0:\r\n" +
+			"Serial Number: ae0bba023dbbe5ac42782735199df0fc\r\n" +
+			"Issuer: CN=CMake Test Cert\r\n" +
+			" NotBefore: 1/1/2014 3:00 AM\r\n" +
+			" NotAfter: 1/1/2100 3:00 AM\r\n" +
+			"Subject: CN=CMake Test Cert\r\n" +
+			"Signature matches Public Key\r\n" +
+			"Root Certificate: Subject matches Issuer\r\n" +
+			"Cert Hash(sha1): f6 3a ac 84 a0 88 4c db 01 26 c3 cd ea 99 1e 36 df 06 4b 3e\r\n" +
+			"----------------  End Nesting Level 1  ----------------\r\n" +
+			"  Provider = Microsoft Strong Cryptographic Provider\r\n" +
+			"Signature test passed\r\n" +
+			"CertUtil: -dump command completed successfully..";
+		var failed = false;
+		var callCount = 0;
+		should.throws(function () {
+			windowslib.certs.test.parseCertUtilOutput(CERT_FILE, output, function (err, value) {
+				callCount++;
+				// first time we're called, throw an Error
+				if (!failed) {
+					failed = true;
+					throw new Error('consumer throwing error');
+				}
+				if (callCount > 1) {
+					return done(new Error('Callback for parseCertUtilOutput got called twice!'));
+				}
+			});
+		}, /consumer throwing error/);
+		done();
+	});
+
 	(process.platform === 'win32' ? it : it.skip)('thumbprint retrieves sha1 thumbprint of cmake temp key with no password', function (done) {
 		this.timeout(5000);
 		this.slow(4000);
