@@ -163,7 +163,31 @@ console.log(sdks);
 ```
 
 ```sh
-?
+[
+  SDK {
+    majorVersion: 10,
+    version: '10.0.17763.0',
+    binDir: 'C:\\Program Files (x86)\\Windows Kits\\10\\bin\\10.0.17763.0',
+    includeDir: 'C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.17763.0',
+    platformsDir: 'C:\\Program Files (x86)\\Windows Kits\\10\\Platforms\\UAP\\10.0.17763.0',
+    executables: {
+      makecert: {
+        arm: null,
+        arm64: 'C:\\Program Files (x86)\\Windows Kits\\10\\bin\\10.0.17763.0\\arm64\\makecert.exe',
+        x86: 'C:\\Program Files (x86)\\Windows Kits\\10\\bin\\10.0.17763.0\\x86\\makecert.exe',
+        x64: 'C:\\Program Files (x86)\\Windows Kits\\10\\bin\\10.0.17763.0\\x64\\makecert.exe'
+      },
+      pvk2pfx: {
+        arm: null,
+        arm64: 'C:\\Program Files (x86)\\Windows Kits\\10\\bin\\10.0.17763.0\\arm64\\pvk2pfx.exe',
+        x86: 'C:\\Program Files (x86)\\Windows Kits\\10\\bin\\10.0.17763.0\\x86\\pvk2pfx.exe',
+        x64: 'C:\\Program Files (x86)\\Windows Kits\\10\\bin\\10.0.17763.0\\x64\\pvk2pfx.exe'
+      }
+    },
+    name: 'Windows 10, version 1809',
+    minVSVersion: '15.0.25909.02'
+  }
+]
 ```
 
 ### vswhere
