@@ -1,7 +1,13 @@
 # 2.0.0
 
- * Initial release of the v2 rewrite.
- * Updated code to ES2015.
+ * BREAKING CHANGE: Initial release of the v2 rewrite with completely new API.
+ * refactor: Updated code to ES2015.
+
+___________________________________________________________________________________________________
+
+> Note: The following releases and changes are not applicable to `windowslib` v2 or newer and are
+> presented below for historical reasons. The source for `windowslib@0.x` can be found at
+> https://github.com/appcelerator/windowslib/tree/0_X.
 
 # 0.6.8 (Jan 29, 2019)
 

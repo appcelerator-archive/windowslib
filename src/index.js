@@ -4,6 +4,7 @@ if (!Error.prepareStackTrace) {
 }
 
 export { default as options } from './options';
+export { default as os } from './os';
 
 import * as certs from './certs';
 import * as sdk from './windows-sdk';

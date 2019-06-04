@@ -8,6 +8,46 @@ A suite of Windows development-related functions.
 
 ## API
 
+ * [OS](#os)
+ * [Visual Studio](#visual-studio)
+ * [Windows SDK](#windows-sdk)
+ * [vswhere](#vswhere)
+ * [certs](#certs)
+
+### OS
+
+#### `os.name`
+
+Retrieves the operating system name.
+
+Returns a `String`.
+
+```js
+import { os } from 'windowslib';
+
+console.log(os.name);
+```
+
+```
+Microsoft Windows 10 Home Single Language
+```
+
+#### `os.version`
+
+Retrieves the operating system version.
+
+Returns a `String`.
+
+```js
+import { os } from 'windowslib';
+
+console.log(os.version);
+```
+
+```
+10.0.17763
+```
+
 ### Visual Studio
 
 #### `getVisualStudios(opts)`
