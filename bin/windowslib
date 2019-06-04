@@ -1,0 +1,43 @@
+#!/usr/bin/env node
+
+const CLI = require('cli-kit').CLI;
+const windowslib = require('../dist/index');
+const pkgJson = require('../package.json');
+
+const cli = new CLI({
+	banner: `${pkgJson.name}, version ${pkgJson.version}`,
+	commands: {
+		sdks: {
+			aliases: [ 'sdk' ],
+			desc: 'detect installed Windows SDKs',
+			async action() {
+				const sdks = await windowslib.sdk.getWindowsSDKs();
+				console.log(JSON.stringify(sdks, null, '  '));
+			}
+		},
+		vs: {
+			desc: 'detect installed Visual Studios',
+			async action() {
+				const vs = await windowslib.vs.getVisualStudios();
+				console.log(JSON.stringify(vs, null, '  '));
+			}
+		},
+		vswhere: {
+			desc: 'locates the vswhere utility',
+			async action() {
+				cli.banner = false;
+				const vswhere = await windowslib.vswhere.getVSWhere();
+				console.log(vswhere.exe);
+			}
+		}
+	},
+	help: true,
+	name: pkgJson.name,
+	version: pkgJson.version
+});
+
+cli.exec()
+	.catch(err => {
+		console.error(err.message);
+		process.exit(err.exitCode || 1);
+	});

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ApplicationPlatform name="UAP" friendlyName="Windows 10, version 1809" version="10.0.17763.0">
+	<MinimumVisualStudioVersion>15.0.25909.02</MinimumVisualStudioVersion>
+</ApplicationPlatform>

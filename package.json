@@ -1,0 +1,48 @@
+{
+	"name": "windowslib",
+	"version": "2.0.0",
+	"description": "Windows Utility Library",
+	"main": "./dist/index",
+	"author": "Axway, Inc. <npmjs@appcelerator.com>",
+	"maintainers": [
+		"Chris Barber <cbarber@axway.com>",
+		"Ewan Harris <eharris@axway.com>"
+	],
+	"license": "Apache-2.0",
+	"keywords": [
+		"appcelerator",
+		"windows",
+		"windows sdk",
+		"visualstudio",
+		"visual studio",
+		"microsoft"
+	],
+	"scripts": {
+		"build": "gulp build",
+		"coverage": "gulp coverage",
+		"docs": "gulp docs",
+		"prepare": "gulp build",
+		"test": "gulp test"
+	},
+	"dependencies": {
+		"appcd-fs": "^1.1.6",
+		"appcd-path": "^1.1.5",
+		"appcd-subprocess": "^1.3.0",
+		"appcd-util": "^1.1.6",
+		"cli-kit": "^0.10.3",
+		"winreglib": "^1.0.2",
+		"xmldom": "^0.1.27"
+	},
+	"devDependencies": {
+		"appcd-gulp": "^2.1.0"
+	},
+	"homepage": "https://github.com/appcelerator/windowslib",
+	"bugs": "https://github.com/appcelerator/windowslib/issues",
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/appcelerator/windowslib.git"
+	},
+	"engines": {
+		"node": ">=8.10.0"
+	}
+}
