@@ -135,6 +135,12 @@ console.log(sdks);
         arm64: 'C:\\Program Files (x86)\\Windows Kits\\10\\bin\\10.0.17763.0\\arm64\\pvk2pfx.exe',
         x86: 'C:\\Program Files (x86)\\Windows Kits\\10\\bin\\10.0.17763.0\\x86\\pvk2pfx.exe',
         x64: 'C:\\Program Files (x86)\\Windows Kits\\10\\bin\\10.0.17763.0\\x64\\pvk2pfx.exe'
+      },
+      WinAppDeployCmd: {
+        arm: null,
+        arm64: null,
+        x86: 'C:\\Program Files (x86)\\Windows Kits\\10\\bin\\10.0.17763.0\\x86\\WinAppDeployCmd.exe',
+        x64: null
       }
     },
     name: 'Windows 10, version 1809',
@@ -182,6 +188,12 @@ console.log(sdks);
         arm64: 'C:\\Program Files (x86)\\Windows Kits\\10\\bin\\10.0.17763.0\\arm64\\pvk2pfx.exe',
         x86: 'C:\\Program Files (x86)\\Windows Kits\\10\\bin\\10.0.17763.0\\x86\\pvk2pfx.exe',
         x64: 'C:\\Program Files (x86)\\Windows Kits\\10\\bin\\10.0.17763.0\\x64\\pvk2pfx.exe'
+      },
+      WinAppDeployCmd: {
+        arm: null,
+        arm64: null,
+        x86: 'C:\\Program Files (x86)\\Windows Kits\\10\\bin\\10.0.17763.0\\x86\\WinAppDeployCmd.exe',
+        x64: null
       }
     },
     name: 'Windows 10, version 1809',

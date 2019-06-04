@@ -98,7 +98,7 @@ export class SDK {
 
 		// find executables
 		const architectures = [ 'arm', 'arm64', 'x86', 'x64' ];
-		const executables = [ 'makecert', 'pvk2pfx' ];
+		const executables = [ 'makecert', 'pvk2pfx', 'WinAppDeployCmd' ];
 		for (const exe of executables) {
 			this.executables[exe] = {};
 			for (const arch of architectures) {
