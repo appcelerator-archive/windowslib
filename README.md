@@ -10,7 +10,7 @@ A suite of Windows development-related functions.
 
  * [OS](#os)
  * [Visual Studio](#visual-studio)
- * [Windows SDK](#windows-sdk)
+ * [Windows SDKs](#windows-sdks)
  * [vswhere](#vswhere)
  * [certs](#certs)
 
