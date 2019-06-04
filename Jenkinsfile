@@ -4,10 +4,14 @@ library 'pipeline-library'
 def nodeVersion = '8.9.1' // changing requires setting version up on Jenkins first, ask Chris or Alan to help
 def npmVersion = 'latest'
 
+def MAINLINE_BRANCH_REGEXP = /master|\d_(\d_)?(X|\d)/ // a branch is considered mainline if 'master' or like: 0_X, 1_7_X, 3_4_8
+def isMainLineBranch = (env.BRANCH_NAME ==~ MAINLINE_BRANCH_REGEXP)
+def publish = isMainLineBranch
+
 timestamps {
   node('windows && windows-sdk-10 && windows-sdk-8.1 && (vs2015 || vs2017) && npm-publish') {
     def packageVersion = ''
-    def isMaster = false
+
     stage('Checkout') {
       // checkout scm
       // Hack for JENKINS-37658 - see https://support.cloudbees.com/hc/en-us/articles/226122247-How-to-Customize-Checkout-for-Pipeline-Multibranch
@@ -18,7 +22,6 @@ timestamps {
         userRemoteConfigs: scm.userRemoteConfigs
       ])
 
-      isMaster = env.BRANCH_NAME.equals('master')
       packageVersion = jsonParse(readFile('package.json'))['version']
       currentBuild.displayName = "#${packageVersion}-${currentBuild.number}"
     }
@@ -52,7 +55,7 @@ timestamps {
         } // stage
 
         stage('Publish') {
-          if (isMaster) {
+          if (publish) {
             bat 'npm publish'
             // tag in git if npm publish worked
             pushGitTag(name: packageVersion, message: "See ${env.BUILD_URL} for more information.", force: true)
