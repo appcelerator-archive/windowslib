@@ -103,16 +103,22 @@ describe('Windows SDK', () => {
 				binDir,
 				executables: {
 					makecert: {
-						arm: path.join(binDir, 'arm', 'makecert.exe'),
+						arm: null,
 						arm64: path.join(binDir, 'arm64', 'makecert.exe'),
 						x64: path.join(binDir, 'x64', 'makecert.exe'),
 						x86: path.join(binDir, 'x86', 'makecert.exe')
 					},
 					pvk2pfx: {
-						arm: path.join(binDir, 'arm', 'pvk2pfx.exe'),
+						arm: null,
 						arm64: path.join(binDir, 'arm64', 'pvk2pfx.exe'),
 						x64: path.join(binDir, 'x64', 'pvk2pfx.exe'),
 						x86: path.join(binDir, 'x86', 'pvk2pfx.exe')
+					},
+					WinAppDeployCmd: {
+						arm: null,
+						arm64: null,
+						x64: null,
+						x86: path.join(binDir, 'x86', 'WinAppDeployCmd.exe')
 					}
 				},
 				includeDir: path.join(__dirname, 'mocks', 'sdk', 'good', 'Include', '10.0.17763.0'),
@@ -138,16 +144,22 @@ describe('Windows SDK', () => {
 				binDir,
 				executables: {
 					makecert: {
-						arm: path.join(binDir, 'arm', 'makecert.exe'),
+						arm: null,
 						arm64: path.join(binDir, 'arm64', 'makecert.exe'),
 						x64: path.join(binDir, 'x64', 'makecert.exe'),
 						x86: path.join(binDir, 'x86', 'makecert.exe')
 					},
 					pvk2pfx: {
-						arm: path.join(binDir, 'arm', 'pvk2pfx.exe'),
+						arm: null,
 						arm64: path.join(binDir, 'arm64', 'pvk2pfx.exe'),
 						x64: path.join(binDir, 'x64', 'pvk2pfx.exe'),
 						x86: path.join(binDir, 'x86', 'pvk2pfx.exe')
+					},
+					WinAppDeployCmd: {
+						arm: null,
+						arm64: null,
+						x64: null,
+						x86: path.join(binDir, 'x86', 'WinAppDeployCmd.exe')
 					}
 				},
 				includeDir: path.join(__dirname, 'mocks', 'sdk', 'good-no-name', 'Include', '10.0.17763.0'),
@@ -190,16 +202,22 @@ describe('Windows SDK', () => {
 				binDir,
 				executables: {
 					makecert: {
-						arm: path.join(binDir, 'arm', 'makecert.exe'),
+						arm: null,
 						arm64: path.join(binDir, 'arm64', 'makecert.exe'),
 						x64: path.join(binDir, 'x64', 'makecert.exe'),
 						x86: path.join(binDir, 'x86', 'makecert.exe')
 					},
 					pvk2pfx: {
-						arm: path.join(binDir, 'arm', 'pvk2pfx.exe'),
+						arm: null,
 						arm64: path.join(binDir, 'arm64', 'pvk2pfx.exe'),
 						x64: path.join(binDir, 'x64', 'pvk2pfx.exe'),
 						x86: path.join(binDir, 'x86', 'pvk2pfx.exe')
+					},
+					WinAppDeployCmd: {
+						arm: null,
+						arm64: null,
+						x64: null,
+						x86: path.join(binDir, 'x86', 'WinAppDeployCmd.exe')
 					}
 				},
 				includeDir: path.join(__dirname, 'mocks', 'sdk', 'good', 'Include', '10.0.17763.0'),
