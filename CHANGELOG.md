@@ -1,4 +1,8 @@
-# 2.0.0
+# 2.0.1 (Jul 1, 2019)
+
+ * chore: Updated dependencies.
+
+# 2.0.0 (Jun 4, 2019)
 
  * BREAKING CHANGE: Initial release of the v2 rewrite with completely new API.
  * refactor: Updated code to ES2015.
