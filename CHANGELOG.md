@@ -1,3 +1,7 @@
+# 2.0.2 (Jul 12, 2019)
+
+ * chore: Updated dependencies.
+
 # 2.0.1 (Jul 1, 2019)
 
  * chore: Updated dependencies.

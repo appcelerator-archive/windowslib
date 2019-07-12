@@ -1,6 +1,6 @@
 {
 	"name": "windowslib",
-	"version": "2.0.1",
+	"version": "2.0.2",
 	"publishConfig": {
 		"tag": "next"
 	},
@@ -32,8 +32,8 @@
 		"appcd-path": "^1.1.6",
 		"appcd-subprocess": "^2.0.1",
 		"appcd-util": "^1.1.7",
-		"cli-kit": "^0.11.1",
-		"winreglib": "^1.0.3",
+		"cli-kit": "^0.11.2",
+		"winreglib": "^1.0.4",
 		"xmldom": "^0.1.27"
 	},
 	"devDependencies": {
