@@ -1,3 +1,10 @@
+# 2.1.0 (Aug 14, 2019)
+
+ * chore: Bumped minimum required Node.js version from v8.10.0 to v8.12.0. While this would
+   technically be considered a breaking change, `windowslib` depends on `winreglib` which already
+   mandates the forementioned Node.js minimums.
+ * chore: Updated dependencies.
+
 # 2.0.2 (Jul 12, 2019)
 
  * chore: Updated dependencies.
