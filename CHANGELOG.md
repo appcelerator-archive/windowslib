@@ -1,3 +1,7 @@
+# 2.1.1 (Nov 7, 2019)
+
+ * chore: Updated dependencies.
+
 # 2.1.0 (Aug 14, 2019)
 
  * chore: Bumped minimum required Node.js version from v8.10.0 to v8.12.0. While this would
