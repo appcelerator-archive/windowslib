@@ -28,16 +28,16 @@
 		"test": "gulp test"
 	},
 	"dependencies": {
-		"appcd-fs": "^1.1.9",
-		"appcd-path": "^1.1.8",
-		"appcd-subprocess": "^3.0.1",
-		"appcd-util": "^2.0.1",
-		"cli-kit": "^0.12.0",
+		"appcd-fs": "^1.1.10",
+		"appcd-path": "^1.1.9",
+		"appcd-subprocess": "^3.0.2",
+		"appcd-util": "^2.0.2",
+		"cli-kit": "^0.13.0",
 		"winreglib": "^1.0.5",
-		"xmldom": "^0.1.27"
+		"xmldom": "^0.2.1"
 	},
 	"devDependencies": {
-		"appcd-gulp": "^2.3.0"
+		"appcd-gulp": "^2.3.1"
 	},
 	"homepage": "https://github.com/appcelerator/windowslib",
 	"bugs": "https://github.com/appcelerator/windowslib/issues",
