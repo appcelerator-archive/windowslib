@@ -1,6 +1,6 @@
 {
 	"name": "windowslib",
-	"version": "2.1.2",
+	"version": "3.0.0",
 	"publishConfig": {
 		"tag": "next"
 	},
@@ -30,15 +30,15 @@
 	},
 	"dependencies": {
 		"appcd-fs": "^1.1.10",
-		"appcd-path": "^1.1.9",
+		"appcd-path": "^2.0.0",
 		"appcd-subprocess": "^3.0.2",
 		"appcd-util": "^2.0.2",
-		"cli-kit": "^0.13.0",
-		"winreglib": "^1.0.5",
-		"xmldom": "^0.2.1"
+		"cli-kit": "^1.2.0",
+		"winreglib": "^2.0.0",
+		"xmldom": "^0.3.0"
 	},
 	"devDependencies": {
-		"appcd-gulp": "^2.3.1"
+		"appcd-gulp": "^3.0.0"
 	},
 	"homepage": "https://github.com/appcelerator/windowslib",
 	"bugs": "https://github.com/appcelerator/windowslib/issues",
@@ -47,6 +47,6 @@
 		"url": "git://github.com/appcelerator/windowslib.git"
 	},
 	"engines": {
-		"node": "^8.12.0 || >=10.2.0"
+		"node": ">=10.13.0"
 	}
 }
