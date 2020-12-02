@@ -1,3 +1,7 @@
+# 3.1.0 (Dec 1, 2020)
+
+ * chore: Updated dependencies.
+
 # 3.0.0 (Jun 5, 2020)
 
  * BREAKING CHANGE: Requires Node.js 10.13.0 or newer.
