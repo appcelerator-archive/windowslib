@@ -35,7 +35,7 @@
 		"appcd-util": "^3.1.1",
 		"cli-kit": "^1.9.2",
 		"winreglib": "^2.0.3",
-		"xmldom": "^0.4.0"
+		"xmldom": "^0.5.0"
 	},
 	"devDependencies": {
 		"appcd-gulp": "^3.1.1"
